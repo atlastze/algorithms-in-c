@@ -1,0 +1,9 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(DoublyLinkedList)
+SET(ROOT ../../..)
+INCLUDE_DIRECTORIES(${ROOT}/include)
+SET(SOURCES
+	main.c
+	${ROOT}/src/DoublyLinkedList.c
+)
+ADD_EXECUTABLE(dlist ${SOURCES})

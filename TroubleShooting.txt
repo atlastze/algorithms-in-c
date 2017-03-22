@@ -1,0 +1,136 @@
+Trouble Shooting
+--------------------------------------------------------------------------
+2017-1-11
+Descriptions:
+	Unable to find an entry point named 'GetSystemTimePreciseAsFileTime' in DLL 'kernel32.dll'
+Platform:
+	Windows 7
+
+Solutions:
+	Use GetSystemTimeAsFileTime rather than GetSystemTimePreciseAsFileTime, for the latter requires:
+	Minimum supported client
+	Windows 8 [desktop apps only]
+	Minimum supported server
+	Windows Server 2012 [desktop apps only]
+
+--------------------------------------------------------------------------
+2017-1-11
+Descriptions:
+	error C2036: 'void *': unknown size
+Platform:
+	Windows 7 + MSVC 2015
+
+Solutions:
+	Replace 'void *' with 'elementtype *' in file 'Vector.h':
+	elementtype *p = (elementtype *)realloc(...);
+	memset(p+n, 0, n*sizeof(vectortype));
+
+--------------------------------------------------------------------------
+2017-1-11
+Descriptions:
+	C:\Program Files\Windows Kits\8.1\include\shared\minwindef.h(157): error C2632:
+	'int' followed by 'int' is illegal
+	C:\Program Files\Windows Kits\8.1\include\shared\minwindef.h(157): warning C4091
+	: 'typedef ': ignored on left of 'int' when no variable is declared
+Platform:
+	Windows 7 with MSVC 2015
+
+Solutions:
+	Don't define BOOL in file 'Vector.h', because BOOL is a typedef in 'windows.h'.
+
+--------------------------------------------------------------------------
+2017-1-11
+Descriptions:
+	'Undefined symbols' error while linking inline function
+Platform:
+	macOS 10.12 + cmake + clang
+
+Solutions:
+	Any function with internal linkage can be an inline function. For a
+	function with external linkage, the following restrictions apply:
+	If a function is declared with an inline function specifier, then it
+	shall also be defined in the same translation unit. If all of the file
+	scope declarations for a function in a translation unit include the
+	inline function specifier without extern, then the definition in that
+	translation unit is an inline definition. An inline definition does not
+	provide an external definition for the function, and does not forbid an
+	external definition in another translation unit. An inline definition
+	provides an alternative to an external definition, which a translator
+	may use to implement any call to the function in the same translation
+	unit. It is unspecified whether a call to the function uses the inline
+	definition or the external definition.
+
+	Declare it as 'static inline' or cancel 'inline'.
+
+--------------------------------------------------------------------------
+2017-1-12
+Descriptions:
+	Acquiring high-resolution time stamps
+Platform:
+	Windows 7
+
+Solutions:
+	Use QueryPerformanceFrequency and QueryPerformanceCounter.
+
+--------------------------------------------------------------------------
+2017-1-20
+Description:
+	IntrusiveLinkedList(1498,0x7fff9b18c3c0) malloc: *** error for object
+	0x7fff55a79400: pointer being freed was not allocated
+	*** set a breakpoint in malloc_error_break to debug
+Platform:
+	macOS
+
+Solutions:
+	In file 'IntrusiveLinkedList.h', rewrite dlist_destroy macro from
+	while(position->next != NULL)   {                                  \
+	to
+	while(position->next != (head)) {                                  \
+
+	For the end condition of a circular linked list is different from that
+	of a non-circular linked list.
+
+--------------------------------------------------------------------------
+2017-2-5
+Description:
+	Graph(1884,0x7fffc57113c0) malloc: *** error for object
+	0xfffffffffffffff0: pointer being freed was not allocated
+
+Solutions:
+	In file 'Graph.c', rewrite following section:
+
+	EdgeLink * position = graph_get_edge(pv1, pv2);
+	if(position) {
+		slist_remove_back(position);
+		if(destroy)
+			destroy(graph_edge_entry_of_position(position));
+	}
+
+	We should save node of 'position' before we detach the node from list.
+	So, the right code is:
+
+	EdgeLink * position = graph_get_edge(pv1, pv2);
+        if(position) {
+                EdgeLink *pe = position->next;
+                slist_remove_back(position);
+                if(destroy)
+                        destroy(graph_edge_entry(pe));
+        }
+
+--------------------------------------------------------------------------
+2017-2-5
+Description:
+	slist_destroy macro defines 'position' locally, which may be
+	error prone if we use 'position' in dlist_for_each at the same time.
+
+--------------------------------------------------------------------------
+2017-2-7
+Description:
+	Segmentation fault(core dump) error while runting TestSimpleGraph example
+
+OS:
+	Ubuntu
+
+Solutions:
+	In file 'Graph.c' function graph_read(), firstedge field is not 
+	initialized. So call slist_init for each firstedge of vertices.

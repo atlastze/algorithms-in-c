@@ -1,0 +1,84 @@
+A incorrect nonrecursive method (analogous to BFS but using a stack instead of a queue)
+was introduced to implement depth-first search:
+-----------------------------------------------------------
+Algorithm BFS(G, v)
+    enqueue(Q, v)
+    mark v as visited
+
+    while Q is not empty do
+        let w = front(Q)
+        visit(w)
+        dequeue(Q)
+
+        for each vertex u adjacent to w do
+            if u is not marked
+                enqueue(Q, u)
+                mark u as visited
+-----------------------------------------------------------
+Algorithm INCORRECT-DFS(G, v)
+    push(S, v)
+    mark v as visited
+
+    while S is not empty do
+        let w = top(S)
+        visit(w)
+        pop(S)
+
+        for each vertex u adjacent to w do
+            if u is not marked
+                push(S, u)
+                mark u as visited
+-----------------------------------------------------------
+The algorithm INCORRECT-DFS(G, v) does not implement depth-first-search, see
+http://11011110.livejournal.com/279880.html
+http://algs4.cs.princeton.edu/41graph/
+-----------------------------------------------------------
+The correct non-recursive DFS algorithm
+(http://www.mathcs.emory.edu/~cheung/Courses/323/Syllabus/Graph/dfs.html):
+
+Algorithm DFS(G, v)
+    push(S, v)
+    mark v as visited
+    visit(v)
+
+    while S is not empty do
+        let w = top(S)
+        pop(S)
+
+        find the first unmarked vertex u that is adjacent to w
+
+        if found such vertex u
+            push(S, u)
+            mark u as visited
+            visit(u)
+
+        else if not found such vertex u
+            pop(S)
+-----------------------------------------------------------
+The example is to check non-recursive depth-first-search of the
+following graph:
+
+0 -- 1 -- 2
+|    |    |
+3 -- 4 -- 5
+|    |    |
+6 -- 7 -- 8
+
+the adjacency lists:
+v0 : -- [v3] -- [v1]
+v1 : -- [v4] -- [v2] -- [v0]
+v2 : -- [v5] -- [v1]
+v3 : -- [v6] -- [v4] -- [v0]
+v4 : -- [v7] -- [v5] -- [v3] -- [v1]
+v5 : -- [v8] -- [v4] -- [v2]
+v6 : -- [v7] -- [v3]
+v7 : -- [v8] -- [v6] -- [v4]
+v8 : -- [v7] -- [v5]
+
+the depth-first-search:
+v0  v3  v6  v7  v8  v5  v4  v1  v2
+
+If we use incorrect-dfs algorithm, the order is:
+v0  v1  v2  v5  v8  v7  v6  v4  v3
+
+Note that v6 is not adjacent to v4, so it does not implement depth-first-search.

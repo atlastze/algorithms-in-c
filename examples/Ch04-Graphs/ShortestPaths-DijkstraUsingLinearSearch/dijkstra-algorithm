@@ -1,0 +1,36 @@
+Dijkstra’s Algorithm of Shortest-Path Problem
+
+Step 0 — initial state 
+vertex		S	A	B	C	D	E	F
+distance	0	inf	inf	inf	inf	inf	inf
+previous	-	-	-	-	-	-	-
+
+"Step 1 — visit vertex S
+vertex		S	A	B	C	D	E	F
+distance	0	5	8	inf	inf	inf	inf
+previous	-	S	S	-	-	-	-
+
+Step 2 — find minimum distance of unvisited vertices ( vertex A) and visit it
+vertex		S	A	B	C	D	E	F
+distance	0	5	7	inf	inf	6	11
+previous	-	S	A	-	-	A	A
+
+Step 3 — find minimum distance of unvisited vertices ( vertex E) and visit it
+vertex		S	A	B	C	D	E	F
+distance	0	5	7	inf	10	6	9
+previous	-	S	A	-	E	A	E
+
+Step 4 — find minimum distance of unvisited vertices ( vertex B) and visit it
+vertex		S	A	B	C	D	E	F
+distance	0	5	7	10	10	6	9
+previous	-	S	A	B	E	A	E
+
+Step 5 — find minimum distance of unvisited vertices ( vertex F) and visit it
+vertex		S	A	B	C	D	E	F
+distance	0	5	7	10	10	6	9
+previous	-	S	A	B	E	A	E
+
+Step 5 — find minimum distance of unvisited vertices ( vertex C) and visit it
+vertex		S	A	B	C	D	E	F
+distance	0	5	7	10	10	6	9
+previous	-	S	A	B	E	A	E
