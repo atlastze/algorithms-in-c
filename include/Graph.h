@@ -346,4 +346,12 @@ int graph_bellman_ford(Graph * dgraph, int source, EdgeListGraph * path);
  */
 void graph_create(EdgeListGraph * src, Graph * dest);
 
+/**
+ * graph_critical_path - find critical path of AOE
+ * @graph: edge-weighted DAG
+ * @source: source vertex
+ * @path: the longest path, which is the critical path
+ */
+void graph_critical_path(Graph * graph, int source, EdgeListGraph * path);
+
 #endif /* GRAPH_H */

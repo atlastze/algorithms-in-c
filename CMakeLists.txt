@@ -36,6 +36,7 @@ ADD_SUBDIRECTORY(examples/Ch04-Graphs/MinimumSpanningTree-PrimUsingPriorityQueue
 ADD_SUBDIRECTORY(examples/Ch04-Graphs/ShortestPaths-BellmanFordUsingEdgeList)
 ADD_SUBDIRECTORY(examples/Ch04-Graphs/ShortestPaths-BellmanFordUsingQueue)
 ADD_SUBDIRECTORY(examples/Ch04-Graphs/ShortestPaths-NegativeCycleDetection)
+ADD_SUBDIRECTORY(examples/Ch04-Graphs/ShortestPaths-CriticalPath)
 ADD_SUBDIRECTORY(examples/Ch04-Graphs/ShortestPaths-DijkstraUsingLinearSearch)
 ADD_SUBDIRECTORY(examples/Ch04-Graphs/ShortestPaths-DijkstraUsingPriorityQueue)
 ADD_SUBDIRECTORY(examples/Ch04-Graphs/StronglyConnectedComponents-Kosaraju)

@@ -449,7 +449,7 @@ int namespace ## _pop_back(vectortype *vector) \
 }
 
 /**
- * __vector_quicksort - sort elements of a vector using quick sort algorithm
+ * _partial_quicksort - sort elements of a vector using quick sort algorithm
  * @array: array to be sorted
  * @startIndex: start index
  * @endIndex: end index

@@ -33,6 +33,7 @@ examples/Ch04-Graphs/MinimumSpanningTree-PrimUsingPriorityQueue \
 examples/Ch04-Graphs/ShortestPaths-BellmanFordUsingEdgeList \
 examples/Ch04-Graphs/ShortestPaths-BellmanFordUsingQueue \
 examples/Ch04-Graphs/ShortestPaths-NegativeCycleDetection \
+examples/Ch04-Graphs/ShortestPaths-CriticalPath \
 examples/Ch04-Graphs/ShortestPaths-DijkstraUsingLinearSearch \
 examples/Ch04-Graphs/ShortestPaths-DijkstraUsingPriorityQueue \
 examples/Ch04-Graphs/StronglyConnectedComponents-Kosaraju \

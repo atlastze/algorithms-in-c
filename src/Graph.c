@@ -34,7 +34,7 @@ HEAP_IMPL(heap, Heap, edgelist, EdgeNode, EdgeList)
 
 #define _min(i, j) ((i) < (j) ? (i) : (j))
 
-int weight_compare(EdgeNode e1, EdgeNode e2)
+static int _compare_weight(EdgeNode e1, EdgeNode e2)
 {
 	if (e1.weight > e2.weight)
 		return 1;
@@ -51,15 +51,15 @@ void graph_init(Graph * graph, int isdirected)
 
 void graph_add_vertex(Graph * graph)
 {
-	Vertex vertex;
-	vertex.id = graph_vertex_size(graph);
-	vertex.vertstate = 0;
-	slist_init(&vertex.firstedge);
-	vertexlist_push_back(&graph->vertices, vertex);
+	int n = graph_vertex_size(graph);
+	vertexlist_resize(&graph->vertices, n+1);
+	graph_vertex_entry(graph, n)->id = n;
+	graph_vertex_entry(graph, n)->vertstate = 0;
+	slist_init(&graph_vertex_entry(graph, n)->firstedge);
 }
 
 static inline void
-graph_add_unidirect_edge(Graph * graph, int i, int j, double weight)
+_graph_add_unidirect_edge(Graph * graph, int i, int j, double weight)
 {
 	if (i < 0 || j < 0 || i >= graph_vertex_size(graph)
 	    || j >= graph_vertex_size(graph))
@@ -76,18 +76,18 @@ graph_add_unidirect_edge(Graph * graph, int i, int j, double weight)
 }
 
 static inline void
-graph_add_bidirect_edge(Graph * graph, int i, int j, double weight)
+_graph_add_bidirect_edge(Graph * graph, int i, int j, double weight)
 {
-	graph_add_unidirect_edge(graph, i, j, weight);
-	graph_add_unidirect_edge(graph, j, i, weight);
+	_graph_add_unidirect_edge(graph, i, j, weight);
+	_graph_add_unidirect_edge(graph, j, i, weight);
 }
 
 void graph_add_edge(Graph * graph, int i, int j, double weight)
 {
 	if (graph->isdirected)
-		graph_add_unidirect_edge(graph, i, j, weight);
+		_graph_add_unidirect_edge(graph, i, j, weight);
 	else
-		graph_add_bidirect_edge(graph, i, j, weight);
+		_graph_add_bidirect_edge(graph, i, j, weight);
 }
 
 EdgeLink *graph_get_edge(Graph * graph, int i, int j)
@@ -211,7 +211,7 @@ void graph_depth_first_search(Graph * graph, int i, IntegerSequence * s)
 /*******************************************************************************
  * Finding paths with depth first search
  ******************************************************************************/
-void _graph_depth_first_path(Graph * graph, int i, EdgeListGraph * path)
+static void _graph_depth_first_path(Graph * graph, int i, EdgeListGraph * path)
 {
 	graph_mark_vertex(graph, i);
 	slist_for_each(pe, &graph_vertex_entry(graph, i)->firstedge) {
@@ -318,7 +318,7 @@ int graph_connected_components(Graph * graph, IntegerSequence * s)
  *
  * Returns 1 on acyclic digraphs, otherwise, return 0.
  */
-int _graph_topological_sort(Graph * graph, int i, IntegerSequence * s)
+static int _graph_topological_sort(Graph * graph, int i, IntegerSequence * s)
 {
 	graph_mark_vertex_grey(graph, i);
 	slist_for_each(pe, &graph_vertex_entry(graph, i)->firstedge) {
@@ -514,11 +514,11 @@ int graph_tarjan_scc(Graph * graph, IntegerSequence * s)
  * Prim's algorithm for minimum spanning tree (similar to Dijkstra'a algorithm)
  ******************************************************************************/
 /**
- * graph_min_dist -- find the minimum distance bewteen a vertex and the others
+ * _graph_min_dist -- find the minimum distance bewteen a vertex and the others
  * Returns 1 on modification, otherwise, returns 0
  */
 static inline int
-graph_min_dist(EdgeListGraph * path, int start, int end, double weight)
+_graph_min_dist(EdgeListGraph * path, int start, int end, double weight)
 {
 	double de = egraph_edge_entry(path, end).weight;
 	if (de > weight) {
@@ -554,7 +554,7 @@ void graph_prim_linear_search(Graph * graph, EdgeListGraph * path)
 			Edge *edge = graph_edge_entry_of_position(pe);
 			Vertex *u = graph_vertex_entry(graph, edge->neighbor);
 			if (graph_vertex_is_unmarked(graph, edge->neighbor))
-				graph_min_dist(path, start, edge->neighbor,
+				_graph_min_dist(path, start, edge->neighbor,
 					       edge->weight);
 		}
 
@@ -591,7 +591,7 @@ void graph_prim_priority_queue(Graph * graph, EdgeListGraph * path)
 
 	/* initialize heap */
 	Heap heap;
-	heap_init(&heap, &path->edges, weight_compare);
+	heap_init(&heap, &path->edges, _compare_weight);
 	printf("initial heap:\n");
 	sequence_write(&heap.h2k, stdout, " ");
 
@@ -606,7 +606,7 @@ void graph_prim_priority_queue(Graph * graph, EdgeListGraph * path)
 			Edge *edge = graph_edge_entry_of_position(pe);
 			if (graph_vertex_is_marked(graph, edge->neighbor))
 				continue;
-			if (graph_min_dist
+			if (_graph_min_dist
 			    (path, start, edge->neighbor, edge->weight)) {
 				printf("update:%d\n", edge->neighbor);
 				heap_update(&heap, edge->neighbor);
@@ -639,7 +639,7 @@ void graph_prim(Graph * graph, EdgeListGraph * path)
  ******************************************************************************/
 /* Returns 1 on modification, otherwise, returns 0 */
 static inline int
-graph_relax(EdgeListGraph * path, int start, int end, double weight)
+_graph_relax(EdgeListGraph * path, int start, int end, double weight)
 {
 	double ds = egraph_edge_entry(path, start).weight;
 	double de = egraph_edge_entry(path, end).weight;
@@ -671,7 +671,7 @@ graph_dijkstra_linear_search(Graph * graph, int source, EdgeListGraph * path)
 		/* update distances */
 		slist_for_each(pe, &vstart->firstedge) {
 			Edge *edge = graph_edge_entry_of_position(pe);
-			graph_relax(path, start, edge->neighbor, edge->weight);
+			_graph_relax(path, start, edge->neighbor, edge->weight);
 		}
 
 		/* finish visiting */
@@ -709,7 +709,7 @@ graph_dijkstra_priority_queue(Graph * graph, int source, EdgeListGraph * path)
 
 	/* initialize heap */
 	Heap heap;
-	heap_init(&heap, &path->edges, weight_compare);
+	heap_init(&heap, &path->edges, _compare_weight);
 
 	int start;
 
@@ -719,7 +719,7 @@ graph_dijkstra_priority_queue(Graph * graph, int source, EdgeListGraph * path)
 		/* update distances */
 		slist_for_each(pe, &vstart->firstedge) {
 			Edge *edge = graph_edge_entry_of_position(pe);
-			if (graph_relax
+			if (_graph_relax
 			    (path, start, edge->neighbor, edge->weight)) {
 				heap_update(&heap, edge->neighbor);
 			}
@@ -798,7 +798,7 @@ int graph_bellman_ford(Graph * graph, int source, EdgeListGraph * path)
 
 		slist_for_each(pe, &graph_vertex_entry(graph, start)->firstedge) {
 			Edge *edge = graph_edge_entry_of_position(pe);
-			if (graph_relax(path, start, edge->neighbor, edge->weight)) {
+			if (_graph_relax(path, start, edge->neighbor, edge->weight)) {
 				/* mark it so as to be processed in next pass */
 				if (graph_vertex_is_unmarked(graph, edge->neighbor)) {
 					graph_mark_vertex(graph, edge->neighbor);
@@ -837,4 +837,30 @@ void graph_create(EdgeListGraph * src, Graph * dest)
 			               egraph_edge_entry(src, i).weight);
 		}
 	}
+}
+
+/*******************************************************************************
+ * Find ritical path with single-source shortest path algorithm
+ ******************************************************************************/
+void _graph_negate(Graph * graph)
+{
+	for (int i = 0; i < graph_vertex_size(graph); i++) {
+		slist_for_each(pe, &graph_vertex_entry(graph, i)->firstedge) {
+			graph_edge_entry_of_position(pe)->weight *= -1;
+		}
+	}
+}
+
+void _path_negate(EdgeListGraph * path)
+{
+	for (int i = 0; i < egraph_vertex_size(path); i++)
+		egraph_edge_entry(path, i).weight *= -1;
+}
+
+void graph_critical_path(Graph * graph, int source, EdgeListGraph * path)
+{
+	_graph_negate(graph);
+	graph_bellman_ford(graph, source, path);
+	_path_negate(path);
+	_graph_negate(graph);
 }
