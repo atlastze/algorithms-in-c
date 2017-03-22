@@ -1,5 +1,5 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
-PROJECT(BellmanFord2)
+PROJECT(BellmanFord3)
 SET(ROOT ../../..)
 INCLUDE_DIRECTORIES(${ROOT}/include)
 SET(SOURCES
@@ -10,4 +10,4 @@ SET(SOURCES
 	${ROOT}/src/DisjointSet.c
 	${ROOT}/src/EdgeListGraph.c
 )
-ADD_EXECUTABLE(bellman2 ${SOURCES})
+ADD_EXECUTABLE(bellman3 ${SOURCES})

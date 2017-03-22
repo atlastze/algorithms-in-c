@@ -103,6 +103,7 @@ void egraph_write(EdgeListGraph * graph, FILE * fp)
 
 void path_resize(EdgeListGraph * path, int source, int vcount)
 {
+	path->vcount = vcount;
 	edgelist_resize(&path->edges, vcount);
 
 	/* Step 1: initialize path */

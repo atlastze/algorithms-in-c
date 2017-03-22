@@ -499,6 +499,8 @@ int graph_tarjan_scc(Graph * graph, IntegerSequence * s)
 
 	TarjanInfo info;
 	_tarjan_init(&info, n);
+
+	graph_reset_vertices(graph);
 	for(int i = 0; i < n; i++)
 		if(graph_vertex_is_unmarked(graph, i))
 			_graph_tarjan_scc(graph, i, &info, s);
@@ -813,4 +815,26 @@ int graph_bellman_ford(Graph * graph, int source, EdgeListGraph * path)
 	if (queuesize != 1)
 		return 0;
 	return 1;
+}
+
+void graph_create(EdgeListGraph * src, Graph * dest)
+{
+	int n = egraph_vertex_size(src);
+	for(int i = 0; i < n; i++)
+		graph_add_vertex(dest);
+
+	printf("%d\n", n);
+
+	graph_write(dest, stdout);
+
+	dest->isdirected = src->isdirected;
+
+	for(int i = 0; i < n; i++) {
+		if(egraph_edge_entry(src, i).start != -1) {
+			graph_add_edge(dest,
+			               egraph_edge_entry(src, i).start,
+			               egraph_edge_entry(src, i).end,
+			               egraph_edge_entry(src, i).weight);
+		}
+	}
 }

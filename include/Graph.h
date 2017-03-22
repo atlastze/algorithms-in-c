@@ -341,4 +341,9 @@ void graph_dijkstra(Graph * graph, int source, EdgeListGraph * path);
 */
 int graph_bellman_ford(Graph * dgraph, int source, EdgeListGraph * path);
 
+/**
+ * graph_create - construct adjacency list from edge list
+ */
+void graph_create(EdgeListGraph * src, Graph * dest);
+
 #endif /* GRAPH_H */
