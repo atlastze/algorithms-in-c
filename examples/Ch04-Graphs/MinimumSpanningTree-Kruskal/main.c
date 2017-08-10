@@ -40,15 +40,16 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	egraph_read(&graph, fp);
+	dot2graph(fp, &graph);
+	//egraph_read(fp, &graph);
 	fclose(fp);
 
-	egraph_write(&graph, stdout);
+	graph2dot(stdout, &graph);
 
 	egraph_kruskal_mst(&graph, &mst);
 
-	egraph_write(&graph, stdout);
-	egraph_write(&mst, stdout);
+	egraph_write(stdout, &graph);
+	egraph_write(stdout, &mst);
 
 	/* destroy graph */
 	egraph_destroy(&graph);

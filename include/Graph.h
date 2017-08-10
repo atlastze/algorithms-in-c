@@ -196,7 +196,7 @@ void graph_destroy(Graph * graph);
  * graph_write - display graph in the form of adjacency list
  * @graph: graph to be displayed
  */
-void graph_write(Graph * graph, FILE * fp);
+void graph_write(FILE * fp, Graph * graph);
 
 /**
  * graph_read - read data from file
@@ -209,7 +209,7 @@ void graph_write(Graph * graph, FILE * fp);
  *	1	2	15.0
  *	...
  */
-void graph_read(Graph * graph, FILE * fp);
+void graph_read(FILE * fp, Graph * graph);
 
 /**
  * graph_reset_vertices - reset vertices state

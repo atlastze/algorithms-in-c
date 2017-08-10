@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	set_read(&set, fp);
+	set_read(fp, &set);
 	fclose(fp);
 #if 0
-	set_write(&set, stdout);
+	set_write(stdout, &set);
 #endif
 	printf("%d components\n", set.count);
 

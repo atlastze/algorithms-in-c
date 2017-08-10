@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	graph_read(&graph, fp);
+	graph_read(fp, &graph);
 	fclose(fp);
 
-	graph_write(&graph, stdout);
+	graph_write(stdout, &graph);
 
 	EdgeListGraph path;
 
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 	graph_dijkstra_linear_search(&graph, 0, &path);
 
 	printf("the shortest-paths:\n");
-	egraph_write(&path, stdout);
+	egraph_write(stdout, &path);
 
 	egraph_destroy(&path);
 

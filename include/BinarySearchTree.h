@@ -56,7 +56,7 @@ BinarySearchTree *bst_read(FILE * fp);
 /**
  * preorder traversal
  */
-void bst_write(BinarySearchTree * root, FILE * fp);
+void bst_write(FILE * fp, BinarySearchTree * root);
 
 /**
  * inorder traversal

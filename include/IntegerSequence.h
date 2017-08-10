@@ -30,7 +30,7 @@
 
 VECTOR_DECL(sequence, int, IntegerSequence)
 #define sequence_entry(s, i) (s->element[i])
-void sequence_read(IntegerSequence * s, FILE * fp);
-void sequence_write(IntegerSequence * s, FILE * fp, char *delimiter);
+void sequence_read(FILE * fp, IntegerSequence * s);
+void sequence_write(FILE * fp, IntegerSequence * s, char *delimiter);
 
 #endif /* INTEGERSEQUENCE_H */

@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	graph_read(&graph, fp);
+	graph_read(fp, &graph);
 	fclose(fp);
 
-	graph_write(&graph, stdout);
+	graph_write(stdout, &graph);
 
 	IntegerSequence s;
 	sequence_init(&s);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 	int count = graph_connected_components(&graph, &s);
 	printf("\nThe number of components: %d\n", count);
 	printf("The components are (separated by -1):\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	sequence_destroy(&s);
 

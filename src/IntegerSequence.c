@@ -28,7 +28,7 @@
 
 VECTOR_IMPL(sequence, int, IntegerSequence)
 
-void sequence_read(IntegerSequence * s, FILE * fp)
+void sequence_read(FILE * fp, IntegerSequence * s)
 {
 	int element;
 	while (fscanf(fp, "%d", &element) == 1) {
@@ -36,7 +36,7 @@ void sequence_read(IntegerSequence * s, FILE * fp)
 	}
 }
 
-void sequence_write(IntegerSequence * s, FILE * fp, char *delimiter)
+void sequence_write(FILE * fp, IntegerSequence * s, char *delimiter)
 {
 	for (int i = 0; i < s->size; i++) {
 		fprintf(fp, "%d%s", sequence_entry(s, i), delimiter);

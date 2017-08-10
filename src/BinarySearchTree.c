@@ -130,13 +130,13 @@ BinarySearchTree *bst_read(FILE * fp)
 	return root;
 }
 
-void bst_write(BinarySearchTree * root, FILE * fp)
+void bst_write(FILE * fp, BinarySearchTree * root)
 {
 	if (root == NULL)
 		return;
 	fprintf(fp, "%d ", root->element);
-	bst_write(root->lchild, fp);
-	bst_write(root->rchild, fp);
+	bst_write(fp, root->lchild);
+	bst_write(fp, root->rchild);
 }
 
 void bst_inorder(BinarySearchTree * root)

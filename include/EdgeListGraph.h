@@ -28,6 +28,7 @@
 
 #include <stdio.h>
 #include "Vector.h"
+#include "GraphReader.h"
 
 /**
  * Edge List Structure of Graph
@@ -77,9 +78,9 @@ int egraph_set_edge(EdgeListGraph * graph, int i, int start, int end,
 
 int egraph_add_edge(EdgeListGraph * graph, int start, int end, double weight);
 
-void egraph_read(EdgeListGraph * graph, FILE * fp);
+void egraph_read(FILE * fp, EdgeListGraph * graph);
 
-void egraph_write(EdgeListGraph * graph, FILE * fp);
+void egraph_write(FILE * fp, EdgeListGraph * graph);
 
 /**
  * path_resize - initialize paths

@@ -49,8 +49,8 @@ int set_find(DisjointSet * set, int i);
 
 int set_union(DisjointSet * set, int i, int j);
 
-void set_read(DisjointSet * set, FILE * fp);
+void set_read(FILE * fp, DisjointSet * set);
 
-void set_write(DisjointSet * set, FILE * fp);
+void set_write(FILE * fp, DisjointSet * set);
 
 #endif /* DISJOINT_SET_H */

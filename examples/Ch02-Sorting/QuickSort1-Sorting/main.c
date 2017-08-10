@@ -42,12 +42,12 @@ int main(int argc, char *argv[])
 	/* populate vector, reallocate capacity: 8 */
 	sequence_from_array(&s, a, 7);
 	printf("the original array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	/* quick sort */
 	sequence_quicksort(&s, compare);
 	printf("the sorted array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	sequence_destroy(&s);
 

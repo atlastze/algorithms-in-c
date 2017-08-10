@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	graph_read(&graph, fp);
+	graph_read(fp, &graph);
 	fclose(fp);
 
-	graph_write(&graph, stdout);
+	graph_write(stdout, &graph);
 
 	EdgeListGraph path;
 
@@ -53,15 +53,15 @@ int main(int argc, char *argv[])
 	else {
 		Graph subgraph;
 		graph_init(&subgraph, 1);
-		egraph_write(&path, stdout);
+		egraph_write(stdout, &path);
 		graph_create(&path, &subgraph);
-		graph_write(&subgraph, stdout);
+		graph_write(stdout, &subgraph);
 
 		IntegerSequence s;
 		sequence_init(&s);
 		graph_tarjan_scc(&subgraph, &s);
 		printf("the strongly connected components are:\n");
-		sequence_write(&s, stdout, " ");
+		sequence_write(stdout, &s, " ");
 
 		sequence_destroy(&s);
 		graph_destroy(&subgraph);

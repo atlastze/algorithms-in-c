@@ -46,7 +46,7 @@ int main(int argc, char *argv[])
 		fclose(fp);
 
 	printf("\npreorder traversal:\n");
-	bst_write(root, stdout);
+	bst_write(stdout, root);
 	printf("\n");
 
 	printf("\ninorder traversal:\n");

@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		fclose(fp);
 
 	printf("preorder traversal:\n");
-	bst_write(root, stdout);
+	bst_write(stdout, root);
 
 	printf("\ninorder traversal:\n");
 	bst_inorder(root);
@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 		root = bst_remove(root, element);
 
 		printf("\npreorder traversal:\n");
-		bst_write(root, stdout);
+		bst_write(stdout, root);
 
 		printf("\ninorder traversal:\n");
 		bst_inorder(root);

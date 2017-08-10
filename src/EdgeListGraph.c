@@ -54,11 +54,11 @@ int egraph_set_edge(EdgeListGraph * graph, int i, int start, int end,
 
 int egraph_add_edge(EdgeListGraph * graph, int start, int end, double weight)
 {
-	return egraph_set_edge(graph, egraph_vertex_size(graph),
+	return egraph_set_edge(graph, egraph_edge_size(graph),
 			       start, end, weight);
 }
 
-void egraph_read(EdgeListGraph * graph, FILE * fp)
+void egraph_read(FILE * fp, EdgeListGraph * graph)
 {
 	EdgeNode edge;
 
@@ -88,7 +88,7 @@ void egraph_read(EdgeListGraph * graph, FILE * fp)
 	}
 }
 
-void egraph_write(EdgeListGraph * graph, FILE * fp)
+void egraph_write(FILE * fp, EdgeListGraph * graph)
 {
 	fprintf(fp, "the graph in edges list:\n");
 	fprintf(fp, "----------------------------------------\n");

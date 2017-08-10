@@ -7,5 +7,6 @@ SET(SOURCES
 	${ROOT}/src/EdgeListGraph.c
 	${ROOT}/src/IntegerSequence.c
 	${ROOT}/src/DisjointSet.c
+	${ROOT}/src/GraphReader.c
 )
 ADD_EXECUTABLE(kruskal ${SOURCES})

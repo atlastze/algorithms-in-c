@@ -39,17 +39,17 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	graph_read(&graph, fp);
+	graph_read(fp, &graph);
 	fclose(fp);
 
-	graph_write(&graph, stdout);
+	graph_write(stdout, &graph);
 
 	IntegerSequence s;
 	sequence_init(&s);
 
 	if (graph_topological_sort(&graph, &s)) {
 		printf("\nThe topological sort order:\n");
-		sequence_write(&s, stdout, " ");
+		sequence_write(stdout, &s, " ");
 	} else
 		printf("\nThe digraph is not acyclic!\n");
 

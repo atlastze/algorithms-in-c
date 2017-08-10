@@ -69,7 +69,7 @@ int set_union(DisjointSet * set, int i, int j)
 	}
 }
 
-void set_read(DisjointSet * set, FILE * fp)
+void set_read(FILE * fp, DisjointSet * set)
 {
 	int i, j;
 	while (fscanf(fp, "%d %d", &i, &j) == 2) {
@@ -85,7 +85,7 @@ void set_read(DisjointSet * set, FILE * fp)
 	}
 }
 
-void set_write(DisjointSet * set, FILE * fp)
+void set_write(FILE * fp, DisjointSet * set)
 {
 	for (int i = 0; i < set_size(set); i++) {
 		fprintf(fp, "%d\t%d\n", i, set_parent(set, i));

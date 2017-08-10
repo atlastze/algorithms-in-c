@@ -1,0 +1,331 @@
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta name="generator" content="Railroad Diagram Generator 1.47.1494"><style type="text/css" xml:space="preserve">
+    ::-moz-selection
+    {
+      color: #FFFCF0;
+      background: #0F0C00;
+    }
+    ::selection
+    {
+      color: #FFFCF0;
+      background: #0F0C00;
+    }
+    .ebnf a
+    {
+      text-decoration: none;
+    }
+    .ebnf a:hover
+    {
+      color: #050400;
+      text-decoration: underline;
+    }
+    .signature
+    {
+      color: #806600;
+      font-size: 11px;
+      text-align: right;
+    }
+    body
+    {
+      font: normal 12px Verdana, sans-serif;
+      color: #0F0C00;
+      background: #FFFCF0;
+    }
+    a:link, a:visited
+    {
+      color: #0F0C00;
+    }
+    a:link.signature, a:visited.signature
+    {
+      color: #806600;
+    }
+    a.button, #tabs li a
+    {
+      padding: 0.25em 0.5em;
+      border: 1px solid #806600;
+      background: #F1E8C6;
+      color: #806600;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a.button:hover, #tabs li a:hover
+    {
+      color: #050400;
+      background: #FFF6D1;
+      border-color: #050400;
+    }
+    #tabs
+    {
+      padding: 3px 10px;
+      margin-left: 0;
+      margin-top: 58px;
+      border-bottom: 1px solid #0F0C00;
+    }
+    #tabs li
+    {
+      list-style: none;
+      margin-left: 5px;
+      display: inline;
+    }
+    #tabs li a
+    {
+      border-bottom: 1px solid #0F0C00;
+    }
+    #tabs li a.active
+    {
+      color: #0F0C00;
+      background: #FFFCF0;
+      border-color: #0F0C00;
+      border-bottom: 1px solid #FFFCF0;
+      outline: none;
+    }
+    #divs div
+    {
+      display: none;
+      overflow:auto;
+    }
+    #divs div.active
+    {
+      display: block;
+    }
+    #text
+    {
+      border-color: #806600;
+      background: #FFFEFA;
+      color: #050400;
+    }
+    .small
+    {
+      vertical-align: top;
+      text-align: right;
+      font-size: 9px;
+      font-weight: normal;
+      line-height: 120%;
+    }
+    td.small
+    {
+      padding-top: 0px;
+    }
+    .hidden
+    {
+      visibility: hidden;
+    }
+    td:hover .hidden
+    {
+      visibility: visible;
+    }
+    div.download
+    {
+      display: none;
+      background: #FFFCF0;
+      position: absolute;
+      right: 34px;
+      top: 94px;
+      padding: 10px;
+      border: 1px dotted #0F0C00;
+    }
+    #divs div.ebnf, div.ebnf
+    {
+      display: block;
+      padding-left: 16px;
+      padding-top: 2px;
+      padding-bottom: 2px;
+      background: #FFF6D1;
+    }
+    tr.option-line td:first-child
+    {
+      text-align: right
+    }
+    tr.option-text td
+    {
+      padding-bottom: 10px
+    }
+    table.palette
+    {
+      border-top: 1px solid #050400;
+      border-right: 1px solid #050400;
+      margin-bottom: 4px
+    }
+    td.palette
+    {
+      border-bottom: 1px solid #050400;
+      border-left: 1px solid #050400;
+    }
+    a.palette
+    {
+      padding: 2px 3px 2px 10px;
+      text-decoration: none;
+    }
+    .palette
+    {
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -o-user-select: none;
+      -ms-user-select: none;
+    }
+  </style></head>
+   <body>
+
+      <p style="font-size: 14px; font-weight:bold"><a name="graph_definition">graph_definition:</a></p>
+      <img border="0" src="diagram/graph_definition.png" height="80" width="160" usemap="#graph_definition.map"><map name="graph_definition.map">
+         <area shape="rect" coords="49,1,111,33" href="#digraph" title="digraph">
+         <area shape="rect" coords="49,45,103,77" href="#graph" title="graph"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#graph_definition" title="graph_definition" shape="rect">graph_definition</a>
+         ::= <a href="#digraph" title="digraph" shape="rect">digraph</a>
+           | <a href="#graph" title="graph" shape="rect">graph</a></pre></div>
+
+      </p>
+
+      <p>no references</p><br><p style="font-size: 14px; font-weight:bold"><a name="digraph">digraph:</a></p>
+      <img border="0" src="diagram/digraph.png" height="70" width="382" usemap="#digraph.map"><map name="digraph.map">
+         <area shape="rect" coords="185,1,285,33" href="#digraph_edge" title="digraph_edge"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#digraph" title="digraph" shape="rect">digraph</a>  ::= 'digraph' '{' <a href="#digraph_edge" title="digraph_edge" shape="rect">digraph_edge</a>* '}'</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#graph_definition" title="graph_definition">graph_definition</a></li>
+
+         </ul>
+
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="graph">graph:</a></p>
+      <img border="0" src="diagram/graph.png" height="70" width="362" usemap="#graph.map"><map name="graph.map">
+         <area shape="rect" coords="175,1,265,33" href="#graph_edge" title="graph_edge"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#graph" title="graph" shape="rect">graph</a>    ::= 'graph' '{' <a href="#graph_edge" title="graph_edge" shape="rect">graph_edge</a>* '}'</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#graph_definition" title="graph_definition">graph_definition</a></li>
+
+         </ul>
+
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="digraph_edge">digraph_edge:</a></p>
+      <img border="0" src="diagram/digraph_edge.png" height="68" width="432" usemap="#digraph_edge.map"><map name="digraph_edge.map">
+         <area shape="rect" coords="29,1,89,33" href="#integer" title="integer">
+         <area shape="rect" coords="165,1,225,33" href="#integer" title="integer">
+         <area shape="rect" coords="265,33,383,65" href="#weight_attribute" title="weight_attribute"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#digraph_edge" title="digraph_edge" shape="rect">digraph_edge</a>
+         ::= <a href="#integer" title="integer" shape="rect">integer</a> '-&gt;' <a href="#integer" title="integer" shape="rect">integer</a> <a href="#weight_attribute" title="weight_attribute" shape="rect">weight_attribute</a>?</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#digraph" title="digraph">digraph</a></li>
+
+         </ul>
+
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="graph_edge">graph_edge:</a></p>
+      <img border="0" src="diagram/graph_edge.png" height="68" width="426" usemap="#graph_edge.map"><map name="graph_edge.map">
+         <area shape="rect" coords="29,1,89,33" href="#integer" title="integer">
+         <area shape="rect" coords="159,1,219,33" href="#integer" title="integer">
+         <area shape="rect" coords="259,33,377,65" href="#weight_attribute" title="weight_attribute"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#graph_edge" title="graph_edge" shape="rect">graph_edge</a>
+         ::= <a href="#integer" title="integer" shape="rect">integer</a> '--' <a href="#integer" title="integer" shape="rect">integer</a> <a href="#weight_attribute" title="weight_attribute" shape="rect">weight_attribute</a>?</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#graph" title="graph">graph</a></li>
+
+         </ul>
+
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="weight_attribute">weight_attribute:</a></p>
+      <img border="0" src="diagram/weight_attribute.png" height="36" width="428" usemap="#weight_attribute.map"><map name="weight_attribute.map">
+         <area shape="rect" coords="241,1,307,33" href="#number" title="number"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#weight_attribute" title="weight_attribute" shape="rect">weight_attribute</a>
+         ::= '[' 'label' '=' '"' <a href="#number" title="number" shape="rect">number</a> '"' ']'</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#digraph_edge" title="digraph_edge">digraph_edge</a></li>
+
+            <li><a href="#graph_edge" title="graph_edge">graph_edge</a></li>
+
+         </ul>
+
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="number">number:</a></p>
+      <img border="0" src="diagram/number.png" height="144" width="750" usemap="#number.map"><map name="number.map">
+         <area shape="rect" coords="139,1,199,33" href="#integer" title="integer">
+         <area shape="rect" coords="303,65,363,97" href="#integer" title="integer">
+         <area shape="rect" coords="183,109,243,141" href="#integer" title="integer">
+         <area shape="rect" coords="641,33,701,65" href="#integer" title="integer"></map>
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#number" title="number" shape="rect">number</a>   ::= ( '+' | '-' )? ( <a href="#integer" title="integer" shape="rect">integer</a> ( '.' <a href="#integer" title="integer" shape="rect">integer</a>? )? | '.' <a href="#integer" title="integer" shape="rect">integer</a> ) ( ( 'e' | 'E' ) ( '+' | '-' )? <a href="#integer" title="integer" shape="rect">integer</a> )?</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#weight_attribute" title="weight_attribute">weight_attribute</a></li>
+
+         </ul>
+
+      </p><br><p style="font-size: 14px; font-weight:bold"><a name="integer">integer:</a></p>
+      <img border="0" src="diagram/integer.png" height="448" width="166">
+
+      <p>
+
+         <div class="ebnf"><pre><a href="#integer" title="integer" shape="rect">integer</a>  ::= ( '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' )+</pre></div>
+
+      </p>
+
+      <p>referenced by:
+
+         <ul>
+
+            <li><a href="#digraph_edge" title="digraph_edge">digraph_edge</a></li>
+
+            <li><a href="#graph_edge" title="graph_edge">graph_edge</a></li>
+
+            <li><a href="#number" title="number">number</a></li>
+
+         </ul>
+
+      </p>
+
+   </body>
+</html>

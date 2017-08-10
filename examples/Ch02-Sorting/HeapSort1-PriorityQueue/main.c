@@ -56,7 +56,7 @@ void create_heap(int *a, int n, int (*compare) (int, int))
 	for (int i = 0; i < 10; i++) {
 		heap_push(&heap, a[i]);
 		printf("   insert %d: ", a[i]);
-		sequence_write(&s, stdout, " ");
+		sequence_write(stdout, &s, " ");
 	}
 
 	sequence_destroy(&s);
@@ -74,18 +74,18 @@ void sort_steps(int *a, int n, int (*compare) (int, int))
 	sequence_init(&s);
 	sequence_from_array(&s, a, n);
 	printf(">> the original array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	Heap heap;
 	heap_init(&heap, &s, compare);
 	printf(">> the heap:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	/* heap sort */
 	printf("\n>> heap sorting:\n");
 	for (int i = n; i > 0; i--) {
 		printf("   peek %d: ", heap_pop(&heap));
-		sequence_write(&s, stdout, " ");
+		sequence_write(stdout, &s, " ");
 	}
 
 	sequence_destroy(&s);
@@ -101,17 +101,17 @@ void sort_inplace(int *a, int n, int (*compare) (int, int))
 	sequence_init(&s);
 	sequence_from_array(&s, a, n);
 	printf(">> the original array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	Heap heap;
 	heap_init(&heap, &s, compare);
 	printf(">> the heap:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	heap_sort(&heap);
 
 	printf(">> the sorted array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	sequence_destroy(&s);
 

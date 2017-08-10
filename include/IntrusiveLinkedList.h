@@ -121,14 +121,14 @@ static inline size_t dlist_size(IntrusiveDList * head)
  * NOTE: It is the responsibilities of programmers to mamage the memory of
  * dummy head.
  */
-#define dlist_destroy(head, type, member, destroy)                         \
-{                                                                          \
-	IntrusiveDListNode *position = head;                               \
-	while(position->next != (head)) {                                  \
+#define dlist_destroy(head, type, member, destroy) \
+{ \
+	IntrusiveDListNode *position = head; \
+	while(position->next != (head)) { \
 		type *element = dlist_entry(position->next, type, member); \
-		dlist_remove_back(position);                               \
-		destroy(element);                                          \
-	}                                                                  \
+		dlist_remove_back(position); \
+		destroy(element); \
+	} \
 }
 
 /*
@@ -227,14 +227,14 @@ static inline size_t slist_size(IntrusiveSList * head)
  * NOTE: It is the responsibilities of programmers to mamage the memory of
  * dummy head.
  */
-#define slist_destroy(head, type, member, destroy)                         \
-{                                                                          \
-	IntrusiveSListNode *position = head;                               \
-	while(position->next) {                                            \
+#define slist_destroy(head, type, member, destroy) \
+{ \
+	IntrusiveSListNode *position = head; \
+	while(position->next) { \
 		type *element = slist_entry(position->next, type, member); \
-		slist_remove_back(position);                               \
-		destroy(element);                                          \
-	}                                                                  \
+		slist_remove_back(position); \
+		destroy(element); \
+	} \
 }
 
 #endif /* INTRUSIVE_LINKED_LIST_H */

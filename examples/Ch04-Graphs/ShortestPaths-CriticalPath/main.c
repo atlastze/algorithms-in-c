@@ -39,10 +39,10 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	graph_read(&graph, fp);
+	graph_read(fp, &graph);
 	fclose(fp);
 
-	graph_write(&graph, stdout);
+	graph_write(stdout, &graph);
 
 	EdgeListGraph path;
 	egraph_init(&path, 1);
@@ -55,7 +55,7 @@ int main(int argc, char *argv[])
 		graph_critical_path(&graph, source, &path);
 
 		printf("the critical-path:\n");
-		egraph_write(&path, stdout);
+		egraph_write(stdout, &path);
 	}
 
 	egraph_destroy(&path);

@@ -45,11 +45,11 @@ int compare2(int a, int b)
 void display_heap_struct(Heap * heap)
 {
 	printf("\n\theap keys:\t");
-	sequence_write(heap->keys, stdout, " ");
+	sequence_write(stdout, heap->keys, " ");
 	printf("\theap index:\t");
-	sequence_write(&heap->h2k, stdout, " ");
+	sequence_write(stdout, &heap->h2k, " ");
 	printf("\tkeys index:\t");
-	sequence_write(&heap->k2h, stdout, " ");
+	sequence_write(stdout, &heap->k2h, " ");
 	/* display_heap_entry */
 	printf("\theap entries:\t");
 	for (int i = 0; i < keys_size(heap); i++) {
@@ -90,7 +90,7 @@ void sort_steps(int *a, int n, int (*compare) (int, int))
 	sequence_init(&s);
 	sequence_from_array(&s, a, n);
 	printf(">> the original array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	Heap heap;
 	heap_init(&heap, &s, compare);
@@ -117,7 +117,7 @@ void sort_index(int *a, int n, int (*compare) (int, int))
 	sequence_init(&s);
 	sequence_from_array(&s, a, n);
 	printf(">> the original array:\n");
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	Heap heap;
 	heap_init(&heap, &s, compare);

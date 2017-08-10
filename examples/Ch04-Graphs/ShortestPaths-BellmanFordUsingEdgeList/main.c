@@ -40,17 +40,17 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	egraph_read(&graph, fp);
+	egraph_read(fp, &graph);
 	fclose(fp);
 
-	egraph_write(&graph, stdout);
+	egraph_write(stdout, &graph);
 
 	if (!egraph_bellman_ford(&graph, 0, &path)) {
 		printf("The graph contains a negative-weight cycle!\n");
 	}
 
-	egraph_write(&graph, stdout);
-	egraph_write(&path, stdout);
+	egraph_write(stdout, &graph);
+	egraph_write(stdout, &path);
 
 	/* destroy graph */
 	egraph_destroy(&graph);

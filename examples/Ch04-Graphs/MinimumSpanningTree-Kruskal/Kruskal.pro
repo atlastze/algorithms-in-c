@@ -12,7 +12,7 @@ INCLUDEPATH = . $(ROOT)/include
 DEPENDPATH = . $(ROOT)/src
 
 # Defines the header files for the project.
-HEADERS = Vector.h DisjointSet.h EdgeListGraph.h IntegerSequence.h
+HEADERS = Vector.h DisjointSet.h EdgeListGraph.h IntegerSequence.h GraphReader.h
 
 # Defines the source files for the project.
-SOURCES = main.c DisjointSet.c EdgeListGraph.c IntegerSequence.c
+SOURCES = main.c DisjointSet.c EdgeListGraph.c IntegerSequence.c GraphReader.c

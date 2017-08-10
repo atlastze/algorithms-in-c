@@ -23,39 +23,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "Graph.h"
-#include <stdio.h>
-#include <string.h>
+#ifndef GRAPH_READER_H
+#define GRAPH_READER_H
 
-int main(int argc, char *argv[])
-{
-	if (argc < 2)
-		return 0;
+/* Forward declaration */
+struct _EdgeListGraph;
 
-	Graph graph;
-	graph_init(&graph, 0);
+/* Save a graph to a dot file */
+void graph2dot(FILE * fp, struct _EdgeListGraph *egraph);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+/* Read a graph from a dot file */
+int dot2graph(FILE * fp, struct _EdgeListGraph *egraph);
 
-	graph_read(fp, &graph);
-	fclose(fp);
-
-	graph_write(stdout, &graph);
-
-	IntegerSequence s;
-	sequence_init(&s);
-
-	graph_reset_vertices(&graph);
-	graph_breadth_first_search(&graph, 0, &s);
-	printf("\nThe breadth-first-search order from vertex 0:\n");
-	sequence_write(stdout, &s, " ");
-
-	sequence_destroy(&s);
-
-	/* destroy graph */
-	graph_destroy(&graph);
-
-	return 0;
-}
+#endif /* GRAPH_READER_H */

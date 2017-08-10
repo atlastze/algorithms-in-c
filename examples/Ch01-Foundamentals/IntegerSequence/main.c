@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
 	/* initialize sequence, default capacity: 4 */
 	sequence_init(&s);
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	/* populate sequence, reallocate capacity: 8 */
 	sequence_push_back(&s, a[0]);
@@ -42,20 +42,20 @@ int main(int argc, char *argv[])
 	sequence_push_back(&s, a[3]);
 	sequence_push_back(&s, a[4]);
 	sequence_push_back(&s, a[5]);
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	/* insert elements, capacity is enough */
 	sequence_insert(&s, 2, 100);
 	sequence_insert(&s, 2, 200);
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	/* insert elements, reallocate capacity: 16 */
 	sequence_insert(&s, 2, 300);
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	/* remove elements */
 	sequence_remove(&s, 3, 4);
-	sequence_write(&s, stdout, " ");
+	sequence_write(stdout, &s, " ");
 
 	sequence_destroy(&s);
 

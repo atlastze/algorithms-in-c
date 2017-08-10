@@ -121,7 +121,7 @@ void graph_destroy(Graph * graph)
 	vertexlist_destroy(&graph->vertices);
 }
 
-void graph_write(Graph * graph, FILE * fp)
+void graph_write(FILE * fp, Graph * graph)
 {
 	fprintf(fp, "The graph represented as adjacency list:\n");
 	fprintf(fp, "----------------------------------------\n");
@@ -139,7 +139,7 @@ void graph_write(Graph * graph, FILE * fp)
 	fprintf(fp, "----------------------------------------\n");
 }
 
-void graph_read(Graph * graph, FILE * fp)
+void graph_read(FILE * fp, Graph * graph)
 {
 	int i, j;
 	double weight;
@@ -543,7 +543,7 @@ void graph_prim_linear_search(Graph * graph, EdgeListGraph * path)
 	path_resize(path, -1, n);
 
 	printf("initial path: \n");
-	egraph_write(path, stdout);
+	egraph_write(stdout, path);
 
 	int start = 0;
 
@@ -561,7 +561,7 @@ void graph_prim_linear_search(Graph * graph, EdgeListGraph * path)
 		/* finish visiting */
 		vstart->vertstate = 1;
 		printf("after visiting vertex: %d\n", start);
-		egraph_write(path, stdout);
+		egraph_write(stdout, path);
 
 		/* find minimum distance unvisited vertex by linear searching */
 		double distance = HUGE_VAL;
@@ -587,13 +587,13 @@ void graph_prim_priority_queue(Graph * graph, EdgeListGraph * path)
 	path_resize(path, -1, n);
 
 	printf("initial path:\n");
-	egraph_write(path, stdout);
+	egraph_write(stdout, path);
 
 	/* initialize heap */
 	Heap heap;
 	heap_init(&heap, &path->edges, _compare_weight);
 	printf("initial heap:\n");
-	sequence_write(&heap.h2k, stdout, " ");
+	sequence_write(stdout, &heap.h2k, " ");
 
 	int start;
 
@@ -610,15 +610,15 @@ void graph_prim_priority_queue(Graph * graph, EdgeListGraph * path)
 			    (path, start, edge->neighbor, edge->weight)) {
 				printf("update:%d\n", edge->neighbor);
 				heap_update(&heap, edge->neighbor);
-				egraph_write(path, stdout);
-				sequence_write(&heap.h2k, stdout, " ");
+				egraph_write(stdout, path);
+				sequence_write(stdout, &heap.h2k, " ");
 			}
 		}
 
 		/* finish visiting */
 		vstart->vertstate = 1;
 		printf("after visiting vertex: %d\n", start);
-		egraph_write(path, stdout);
+		egraph_write(stdout, path);
 		/*heap_pop(&heap); */
 
 		/* find minimum distance unvisited vertex */
@@ -662,7 +662,7 @@ graph_dijkstra_linear_search(Graph * graph, int source, EdgeListGraph * path)
 	path_resize(path, source, n);
 
 	printf("initial path start from vertex: %d\n", source);
-	egraph_write(path, stdout);
+	egraph_write(stdout, path);
 
 	int start = source;
 
@@ -677,7 +677,7 @@ graph_dijkstra_linear_search(Graph * graph, int source, EdgeListGraph * path)
 		/* finish visiting */
 		vstart->vertstate = 1;
 		printf("after visiting vertex: %d\n", start);
-		egraph_write(path, stdout);
+		egraph_write(stdout, path);
 
 		/* find minimum distance unvisited vertex by linear searching */
 		double distance = HUGE_VAL;
@@ -705,7 +705,7 @@ graph_dijkstra_priority_queue(Graph * graph, int source, EdgeListGraph * path)
 	path_resize(path, source, n);
 
 	printf("initial path start from vertex: %d\n", source);
-	egraph_write(path, stdout);
+	egraph_write(stdout, path);
 
 	/* initialize heap */
 	Heap heap;
@@ -727,7 +727,7 @@ graph_dijkstra_priority_queue(Graph * graph, int source, EdgeListGraph * path)
 
 		/* finish visiting */
 		printf("after visiting vertex: %d\n", start);
-		egraph_write(path, stdout);
+		egraph_write(stdout, path);
 
 		/* find minimum distance unvisited vertex */
 		if (heap_isempty(&heap))
@@ -780,9 +780,9 @@ int graph_bellman_ford(Graph * graph, int source, EdgeListGraph * path)
 	 */
 	int pass = 0;
 	while (queue.size != 0 && pass < n) {
-		egraph_write(path, stdout);
+		egraph_write(stdout, path);
 		printf("vertices queue: ");
-		sequence_write(&queue, stdout, " ");
+		sequence_write(stdout, &queue, " ");
 		int start;
 		sequence_get_front(&queue, &start);
 		sequence_pop_front(&queue);
@@ -825,7 +825,7 @@ void graph_create(EdgeListGraph * src, Graph * dest)
 
 	printf("%d\n", n);
 
-	graph_write(dest, stdout);
+	graph_write(stdout, dest);
 
 	dest->isdirected = src->isdirected;
 

@@ -42,14 +42,14 @@ int main(int argc, char *argv[])
 	if (!fp)
 		exit(1);
 
-	graph_read(&graph, fp);
+	graph_read(fp, &graph);
 	fclose(fp);
 
-	graph_write(&graph, stdout);
+	graph_write(stdout, &graph);
 
 	graph_prim_priority_queue(&graph, &mst);
 
-	egraph_write(&mst, stdout);
+	egraph_write(stdout, &mst);
 
 	/* destroy graph */
 	graph_destroy(&graph);
