@@ -29,32 +29,32 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	EdgeListGraph graph, path;
-	egraph_init(&graph, 0);
-	egraph_init(&path, 0);
+    EdgeListGraph graph, path;
+    egraph_init(&graph, 0);
+    egraph_init(&path, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	egraph_read(fp, &graph);
-	fclose(fp);
+    egraph_read(fp, &graph);
+    fclose(fp);
 
-	egraph_write(stdout, &graph);
+    egraph_write(stdout, &graph);
 
-	if (!egraph_bellman_ford(&graph, 0, &path)) {
-		printf("The graph contains a negative-weight cycle!\n");
-	}
+    if (!egraph_bellman_ford(&graph, 0, &path)) {
+        printf("The graph contains a negative-weight cycle!\n");
+    }
 
-	egraph_write(stdout, &graph);
-	egraph_write(stdout, &path);
+    egraph_write(stdout, &graph);
+    egraph_write(stdout, &path);
 
-	/* destroy graph */
-	egraph_destroy(&graph);
-	egraph_destroy(&path);
+    /* destroy graph */
+    egraph_destroy(&graph);
+    egraph_destroy(&path);
 
-	return 0;
+    return 0;
 }

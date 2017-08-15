@@ -31,41 +31,40 @@
 
 int compare(int a, int b)
 {
-	return a - b;
+    return a - b;
 }
 
 int main(int argc, char *argv[])
 {
-	IntegerSequence s;
+    IntegerSequence s;
 
-	/* initialize vector, default capacity: 4 */
-	sequence_init(&s);
+    /* initialize vector, default capacity: 4 */
+    sequence_init(&s);
 
-	int n = 200;
-	double dt1 = 0.0, dt2;
+    int n = 200;
+    double dt1 = 0.0, dt2;
 
-	while (n < 1000000) {
-		sequence_clear(&s);
-		/* populate vector with random numbers */
-		srand(time(NULL));
-		for (int i = 0; i < n; i++)
-			sequence_push_back(&s, rand());
-		/*print(&s); */
+    while (n < 1000000) {
+        sequence_clear(&s);
+        /* populate vector with random numbers */
+        srand(time(NULL));
+        for (int i = 0; i < n; i++)
+            sequence_push_back(&s, rand());
+        /*print(&s); */
 
-		/* quick sort */
-		double t0 = real_time();
-		sequence_quicksort(&s, compare);
-		double t1 = real_time();
-		dt2 = t1 - t0;
-		double ratio = dt1 == 0.0 ? 0.0 : dt2 / dt1;
-		printf("n: %7d, elapsed time: %lf sec, ratio: %lf\n", n, dt2,
-		       ratio);
-		dt1 = dt2;
-		/*print(&s); */
-		n *= 2;
-	}
+        /* quick sort */
+        double t0 = real_time();
+        sequence_quicksort(&s, compare);
+        double t1 = real_time();
+        dt2 = t1 - t0;
+        double ratio = dt1 == 0.0 ? 0.0 : dt2 / dt1;
+        printf("n: %7d, elapsed time: %lf sec, ratio: %lf\n", n, dt2, ratio);
+        dt1 = dt2;
+        /*print(&s); */
+        n *= 2;
+    }
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	return 0;
+    return 0;
 }

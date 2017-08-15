@@ -45,7 +45,7 @@
  *
  * -- from Robert Sedgewick, Kevin Wayne, Algorithms 4th/e
  *
- * See also: 
+ * See also:
  * 'Adaptable Prirority Queue' in Data Structures and Algorithms in C++/Java
  * by Goodrich, Tamassia and Mount
  */
@@ -57,11 +57,11 @@
  */
 #define HEAP_STRUCT_DECL(heaptype, elementtype, vectortype) \
 typedef struct heaptype { \
-	vectortype *keys; \
-	IntegerSequence h2k; \
-	IntegerSequence k2h; \
-	int heapsize; \
-	int (*compare)(elementtype, elementtype); \
+    vectortype *keys; \
+    IntegerSequence h2k; \
+    IntegerSequence k2h; \
+    int heapsize; \
+    int (*compare)(elementtype, elementtype); \
 } heaptype;
 
 #define heap_entry(heap, i) ((heap)->keys->element[(heap)->h2k.element[i]])
@@ -73,7 +73,7 @@ typedef struct heaptype { \
 #define heap_isempty(heap) ((heap)->heapsize == 0)
 
 #define heap_compare(heap, i, j) ((heap)->compare(heap_entry(heap, i), \
-	heap_entry(heap, j)))
+    heap_entry(heap, j)))
 
 #define HEAP_SWAP_DECL(heap_namespace, heaptype) \
 void heap_namespace ## _swap(heaptype * heap, int i, int j)
@@ -81,13 +81,13 @@ void heap_namespace ## _swap(heaptype * heap, int i, int j)
 #define HEAP_SWAP_IMPL(heap_namespace, heaptype) \
 void heap_namespace ## _swap(heaptype * heap, int i, int j) \
 { \
-	int k1 = vector_entry(&heap->h2k, i); \
-	int k2 = vector_entry(&heap->h2k, j); \
-	/* update heap-keys indices */ \
-	sequence_swap(&heap->h2k, i, j); \
-	/* update keys-heap indices */ \
-	sequence_set(&heap->k2h, k1, j); \
-	sequence_set(&heap->k2h, k2, i); \
+    int k1 = vector_entry(&heap->h2k, i); \
+    int k2 = vector_entry(&heap->h2k, j); \
+    /* update heap-keys indices */ \
+    sequence_swap(&heap->h2k, i, j); \
+    /* update keys-heap indices */ \
+    sequence_set(&heap->k2h, k1, j); \
+    sequence_set(&heap->k2h, k2, i); \
 }
 
 /**
@@ -102,14 +102,14 @@ void heap_namespace ## _sift_up(heaptype * heap, int n)
 #define HEAP_SIFT_UP_IMPL(heap_namespace, heaptype, vector_namespace) \
 void heap_namespace ## _sift_up(heaptype * heap, int n) \
 {  \
-	int child = n; \
-	while(child >= 1) { \
-		int parent = (child-1)/2; \
-		if(heap_compare(heap, child, parent) >= 0) \
-			break; \
-		heap_namespace ## _swap(heap, parent, child); \
-		child = parent; \
-	} \
+    int child = n; \
+    while(child >= 1) { \
+        int parent = (child-1)/2; \
+        if(heap_compare(heap, child, parent) >= 0) \
+            break; \
+        heap_namespace ## _swap(heap, parent, child); \
+        child = parent; \
+    } \
 }
 
 /**
@@ -127,19 +127,19 @@ void heap_namespace ## _sift_down(heaptype * heap, int n)
 #define HEAP_SIFT_DOWN_IMPL(heap_namespace, heaptype, vector_namespace) \
 void heap_namespace ## _sift_down(heaptype * heap, int n) \
 {  \
-	int parent = n; \
-	while(2*parent+1 <= heap->heapsize-1) { /* at least one child */ \
-		int child = 2*parent+1; \
-		/* two children, exchange the node with the smaller one */ \
-		if(child+1 <= heap->heapsize-1 && heap_compare(heap, \
-		child, child+1) > 0) \
-			child = child+1; \
-		if(heap_compare(heap, parent, child) > 0) { \
-			heap_namespace ## _swap(heap, parent, child); \
-			parent = child; \
-		} else \
-			break; \
-	} \
+    int parent = n; \
+    while(2*parent+1 <= heap->heapsize-1) { /* at least one child */ \
+        int child = 2*parent+1; \
+        /* two children, exchange the node with the smaller one */ \
+        if(child+1 <= heap->heapsize-1 && heap_compare(heap, \
+        child, child+1) > 0) \
+            child = child+1; \
+        if(heap_compare(heap, parent, child) > 0) { \
+            heap_namespace ## _swap(heap, parent, child); \
+            parent = child; \
+        } else \
+            break; \
+    } \
 }
 
 /**
@@ -148,22 +148,22 @@ void heap_namespace ## _sift_down(heaptype * heap, int n) \
  */
 #define HEAP_INIT_DECL(heap_namespace, heaptype, elementtype, vectortype) \
 void heap_namespace ## _init(heaptype * heap, vectortype * keys, \
-	int (*compare)(elementtype, elementtype))
+    int (*compare)(elementtype, elementtype))
 
 #define HEAP_INIT_IMPL(heap_namespace, heaptype, elementtype, vectortype) \
 void heap_namespace ## _init(heaptype * heap, vectortype * keys, \
-	int (*compare)(elementtype, elementtype)) \
+    int (*compare)(elementtype, elementtype)) \
 {  \
-	heap->keys = keys; heap->heapsize = keys->size; \
-	sequence_init(&heap->h2k); \
-	sequence_init(&heap->k2h); \
-	heap->compare = compare; \
-	for(int i = 0; i < keys->size; i++) { \
-		sequence_insert(&heap->h2k, i, i); \
-		sequence_insert(&heap->k2h, i, i); \
-	} \
-	for(int i = keys->size/2; i >= 0; i--) \
-		heap_namespace ## _sift_down(heap, i); \
+    heap->keys = keys; heap->heapsize = keys->size; \
+    sequence_init(&heap->h2k); \
+    sequence_init(&heap->k2h); \
+    heap->compare = compare; \
+    for(int i = 0; i < keys->size; i++) { \
+        sequence_insert(&heap->h2k, i, i); \
+        sequence_insert(&heap->k2h, i, i); \
+    } \
+    for(int i = keys->size/2; i >= 0; i--) \
+        heap_namespace ## _sift_down(heap, i); \
 }
 
 /**
@@ -177,11 +177,11 @@ void heap_namespace ## _destroy(heaptype * heap)
 #define HEAP_DESTROY_IMPL(heap_namespace, heaptype, vectortype) \
 void heap_namespace ## _destroy(heaptype * heap) \
 {  \
-	heap->keys = NULL; \
-	heap->heapsize = 0; \
-	heap->compare = NULL; \
-	sequence_destroy(&heap->h2k); \
-	sequence_destroy(&heap->k2h); \
+    heap->keys = NULL; \
+    heap->heapsize = 0; \
+    heap->compare = NULL; \
+    sequence_destroy(&heap->h2k); \
+    sequence_destroy(&heap->k2h); \
 }
 
 /**
@@ -193,11 +193,11 @@ void heap_namespace ## _push(heaptype * heap, elementtype element)
 #define HEAP_PUSH_IMPL(heap_namespace, heaptype, vector_namespace, elementtype) \
 void heap_namespace ## _push(heaptype * heap, elementtype element) \
 {  \
-	vector_namespace ## _insert(heap->keys, heap->heapsize, element); \
-	sequence_insert(&heap->h2k, heap->heapsize, heap->heapsize); \
-	sequence_insert(&heap->k2h, heap->heapsize, heap->heapsize); \
-	heap_namespace ## _sift_up(heap, heap->heapsize); \
-	heap->heapsize++; \
+    vector_namespace ## _insert(heap->keys, heap->heapsize, element); \
+    sequence_insert(&heap->h2k, heap->heapsize, heap->heapsize); \
+    sequence_insert(&heap->k2h, heap->heapsize, heap->heapsize); \
+    heap_namespace ## _sift_up(heap, heap->heapsize); \
+    heap->heapsize++; \
 }
 
 /**
@@ -210,11 +210,11 @@ int heap_namespace ## _top(heaptype * heap)
 #define HEAP_TOP_IMPL(heap_namespace, heaptype, vector_namespace, elementtype) \
 int heap_namespace ## _top(heaptype * heap) \
 {  \
-	if(heap_isempty(heap)) { \
-		fprintf(stderr, "heap is empty!\n"); \
-		exit(1); \
-	} \
-	return  vector_entry(&heap->h2k, 0); \
+    if(heap_isempty(heap)) { \
+        fprintf(stderr, "heap is empty!\n"); \
+        exit(1); \
+    } \
+    return  vector_entry(&heap->h2k, 0); \
 }
 
 /**
@@ -228,15 +228,15 @@ int heap_namespace ## _pop(heaptype * heap)
 #define HEAP_POP_IMPL(heap_namespace, heaptype, vector_namespace, elementtype) \
 int heap_namespace ## _pop(heaptype * heap) \
 {  \
-	if(heap_isempty(heap)) { \
-		fprintf(stderr, "heap is empty!\n"); \
-		exit(1); \
-	} \
-	int keyIndex = vector_entry(&heap->h2k, 0); \
-	heap_namespace ## _swap(heap, 0, heap->heapsize-1); \
-	heap->heapsize--; \
-	heap_namespace ## _sift_down(heap, 0); \
-	return keyIndex; \
+    if(heap_isempty(heap)) { \
+        fprintf(stderr, "heap is empty!\n"); \
+        exit(1); \
+    } \
+    int keyIndex = vector_entry(&heap->h2k, 0); \
+    heap_namespace ## _swap(heap, 0, heap->heapsize-1); \
+    heap->heapsize--; \
+    heap_namespace ## _sift_down(heap, 0); \
+    return keyIndex; \
 }
 
 /**
@@ -252,12 +252,12 @@ void heap_namespace ## _update(heaptype * heap, int i)
 #define HEAP_UPDATE_IMPL(heap_namespace, heaptype, vector_namespace, elementtype) \
 void heap_namespace ## _update(heaptype * heap, int i) \
 { \
-	/* convert key index to heap index */ \
-	i = vector_entry(&heap->k2h, i); \
-	if(i > 0 && heap_compare(heap, (i-1)/2, i) > 0) \
-		heap_namespace ## _sift_up(heap, i); \
-	else \
-		heap_namespace ## _sift_down(heap, i); \
+    /* convert key index to heap index */ \
+    i = vector_entry(&heap->k2h, i); \
+    if(i > 0 && heap_compare(heap, (i-1)/2, i) > 0) \
+        heap_namespace ## _sift_up(heap, i); \
+    else \
+        heap_namespace ## _sift_down(heap, i); \
 }
 
 /**
@@ -269,8 +269,8 @@ void heap_namespace ## _sort(heaptype * heap)
 #define HEAP_SORT_IMPL(heap_namespace, heaptype) \
 void heap_namespace ## _sort(heaptype * heap) \
 { \
-	for( int i = heap->heapsize; i > 0; i--) \
-		heap_namespace ## _pop(heap); \
+    for( int i = heap->heapsize; i > 0; i--) \
+        heap_namespace ## _pop(heap); \
 }
 
 #define HEAP_DECL(heap_namespace, heaptype, vector_namespace, elementtype, vectortype) \

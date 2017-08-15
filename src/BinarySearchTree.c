@@ -28,122 +28,122 @@
 
 BinarySearchTree *bst_create_node(int element)
 {
-	BinarySearchTree *bst =
-	    (BinarySearchTree *) malloc(sizeof(BinarySearchTree));
-	bst->element = element;
-	bst->lchild = NULL;
-	bst->rchild = NULL;
-	return bst;
+    BinarySearchTree *bst =
+        (BinarySearchTree *) malloc(sizeof(BinarySearchTree));
+    bst->element = element;
+    bst->lchild = NULL;
+    bst->rchild = NULL;
+    return bst;
 }
 
 void bst_destroy(BinarySearchTree * root)
 {
-	if (root == NULL)
-		return;
+    if (root == NULL)
+        return;
 
-	if (root->lchild)
-		bst_destroy(root->lchild);
-	if (root->rchild)
-		bst_destroy(root->rchild);
-	free(root);
+    if (root->lchild)
+        bst_destroy(root->lchild);
+    if (root->rchild)
+        bst_destroy(root->rchild);
+    free(root);
 }
 
 BinarySearchTree *bst_search(BinarySearchTree * root, BSTelementtype element)
 {
-	if (root == NULL)
-		return NULL;
-	if (element < root->element)
-		return bst_search(root->lchild, element);
-	else if (element > root->element)
-		return bst_search(root->rchild, element);
-	else
-		return root;
+    if (root == NULL)
+        return NULL;
+    if (element < root->element)
+        return bst_search(root->lchild, element);
+    else if (element > root->element)
+        return bst_search(root->rchild, element);
+    else
+        return root;
 }
 
 BinarySearchTree *bst_minimum(BinarySearchTree * root)
 {
-	if (root == NULL)
-		return NULL;
+    if (root == NULL)
+        return NULL;
 
-	while (root->lchild != NULL)
-		root = root->lchild;
-	return root;
+    while (root->lchild != NULL)
+        root = root->lchild;
+    return root;
 }
 
 BinarySearchTree *bst_maximum(BinarySearchTree * root)
 {
-	if (root == NULL)
-		return NULL;
+    if (root == NULL)
+        return NULL;
 
-	while (root->rchild != NULL)
-		root = root->rchild;
-	return root;
+    while (root->rchild != NULL)
+        root = root->rchild;
+    return root;
 }
 
 BinarySearchTree *bst_insert(BinarySearchTree * root, BSTelementtype element)
 {
-	if (root == NULL)	/* create and return a one-node tree */
-		return bst_create_node(element);
-	else if (element < root->element)
-		root->lchild = bst_insert(root->lchild, element);
-	else if (element > root->element)
-		root->rchild = bst_insert(root->rchild, element);
-	/* else the element is in the tree already; we'll do nothing */
+    if (root == NULL)           /* create and return a one-node tree */
+        return bst_create_node(element);
+    else if (element < root->element)
+        root->lchild = bst_insert(root->lchild, element);
+    else if (element > root->element)
+        root->rchild = bst_insert(root->rchild, element);
+    /* else the element is in the tree already; we'll do nothing */
 
-	return root;		/* Do not forget this line!! */
+    return root;                /* Do not forget this line!! */
 }
 
 BinarySearchTree *bst_remove(BinarySearchTree * root, BSTelementtype element)
 {
-	BinarySearchTree *tmpCell;
+    BinarySearchTree *tmpCell;
 
-	if (root == NULL)
-		return NULL;
-	else if (element < root->element)	/* go left  */
-		root->lchild = bst_remove(root->lchild, element);
-	else if (element > root->element)	/* go right */
-		root->rchild = bst_remove(root->rchild, element);
-	/* found element to be deleted */
-	else if (root->lchild && root->rchild) {	/* 2 children */
-		/* replace with smallest in right subtree */
-		tmpCell = bst_minimum(root->rchild);
-		root->element = tmpCell->element;
-		root->rchild = bst_remove(root->rchild, root->element);
-	} else {		/* 1 or 0 children */
-		tmpCell = root;
-		if (root->lchild == NULL)	/* also handles 0 children */
-			root = root->rchild;
-		else if (root->rchild == NULL)
-			root = root->lchild;
-		free(tmpCell);
-	}
+    if (root == NULL)
+        return NULL;
+    else if (element < root->element)   /* go left  */
+        root->lchild = bst_remove(root->lchild, element);
+    else if (element > root->element)   /* go right */
+        root->rchild = bst_remove(root->rchild, element);
+    /* found element to be deleted */
+    else if (root->lchild && root->rchild) {    /* 2 children */
+        /* replace with smallest in right subtree */
+        tmpCell = bst_minimum(root->rchild);
+        root->element = tmpCell->element;
+        root->rchild = bst_remove(root->rchild, root->element);
+    } else {                    /* 1 or 0 children */
+        tmpCell = root;
+        if (root->lchild == NULL)   /* also handles 0 children */
+            root = root->rchild;
+        else if (root->rchild == NULL)
+            root = root->lchild;
+        free(tmpCell);
+    }
 
-	return root;
+    return root;
 }
 
 BinarySearchTree *bst_read(FILE * fp)
 {
-	BinarySearchTree *root = NULL;
-	BSTelementtype element;
-	while (fscanf(fp, "%d", &element) == 1)
-		root = bst_insert(root, element);
-	return root;
+    BinarySearchTree *root = NULL;
+    BSTelementtype element;
+    while (fscanf(fp, "%d", &element) == 1)
+        root = bst_insert(root, element);
+    return root;
 }
 
 void bst_write(FILE * fp, BinarySearchTree * root)
 {
-	if (root == NULL)
-		return;
-	fprintf(fp, "%d ", root->element);
-	bst_write(fp, root->lchild);
-	bst_write(fp, root->rchild);
+    if (root == NULL)
+        return;
+    fprintf(fp, "%d ", root->element);
+    bst_write(fp, root->lchild);
+    bst_write(fp, root->rchild);
 }
 
 void bst_inorder(BinarySearchTree * root)
 {
-	if (root == NULL)
-		return;
-	bst_inorder(root->lchild);
-	printf("%d ", root->element);
-	bst_inorder(root->rchild);
+    if (root == NULL)
+        return;
+    bst_inorder(root->lchild);
+    printf("%d ", root->element);
+    bst_inorder(root->rchild);
 }

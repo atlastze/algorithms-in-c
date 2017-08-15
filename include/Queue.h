@@ -53,6 +53,6 @@ typedef IntrusiveDListNode Queue;
 #define queue_front(q) ((q)->next)
 
 #define queue_destroy(head, type, member, destroy) \
-        dlist_destroy(head, type, member, destroy)
+    dlist_destroy(head, type, member, destroy)
 
 #endif /* QUEUE_H */

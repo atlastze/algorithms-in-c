@@ -40,98 +40,97 @@ VECTOR_IMPL(operand_stack, int, OperandStack)
 
 void show_operator_stack(OperatorStack * stack)
 {
-	printf("Operator Stack:\n");
-	for (int i = 0; i < stack->size; i++) {
-		char t;
-		if (operator_stack_get(stack, i, &t))
-			printf("[%2d]\t%c\n", i, t);
-	}
+    printf("Operator Stack:\n");
+    for (int i = 0; i < stack->size; i++) {
+        char t;
+        if (operator_stack_get(stack, i, &t))
+            printf("[%2d]\t%c\n", i, t);
+    }
 }
 
 void show_operand_stack(OperandStack * stack)
 {
-	printf("Operand Stack:\n");
-	for (int i = 0; i < stack->size; i++) {
-		int t;
-		if (operand_stack_get(stack, i, &t))
-			printf("[%2d]\t%d\n", i, t);
-	}
+    printf("Operand Stack:\n");
+    for (int i = 0; i < stack->size; i++) {
+        int t;
+        if (operand_stack_get(stack, i, &t))
+            printf("[%2d]\t%d\n", i, t);
+    }
 }
 
 int operator_rank(char operator)
 {
-	if (operator == '+' || operator == '-')
-		return 1;
-	else if (operator == '*' || operator == '/')
-		return 2;
-	else
-		return 0;
+    if (operator == '+' || operator == '-')
+        return 1;
+    else if (operator == '*' || operator == '/')
+        return 2;
+    else
+        return 0;
 }
 
 void calculate(char operator, OperandStack * operandStack)
 {
-	int a, b;
-	operand_stack_get_back(operandStack, &b);
-	operand_stack_pop_back(operandStack);
-	operand_stack_get_back(operandStack, &a);
-	operand_stack_pop_back(operandStack);
-	printf(">> Calculating %d %c %d ...\n", a, operator, b);
-	switch (operator) {
-	case '+':
-		operand_stack_push_back(operandStack, a + b);
-		break;
-	case '-':
-		operand_stack_push_back(operandStack, a - b);
-		break;
-	case '*':
-		operand_stack_push_back(operandStack, a * b);
-		break;
-	case '/':
-		operand_stack_push_back(operandStack, a / b);
-		break;
-	}
+    int a, b;
+    operand_stack_get_back(operandStack, &b);
+    operand_stack_pop_back(operandStack);
+    operand_stack_get_back(operandStack, &a);
+    operand_stack_pop_back(operandStack);
+    printf(">> Calculating %d %c %d ...\n", a, operator, b);
+    switch (operator) {
+    case '+':
+        operand_stack_push_back(operandStack, a + b);
+        break;
+    case '-':
+        operand_stack_push_back(operandStack, a - b);
+        break;
+    case '*':
+        operand_stack_push_back(operandStack, a * b);
+        break;
+    case '/':
+        operand_stack_push_back(operandStack, a / b);
+        break;
+    }
 }
 
 int main(int argc, char *argv[])
 {
-	OperatorStack operatorStack;
-	OperandStack operandStack;
+    OperatorStack operatorStack;
+    OperandStack operandStack;
 
-	operator_stack_init(&operatorStack);
-	operand_stack_init(&operandStack);
+    operator_stack_init(&operatorStack);
+    operand_stack_init(&operandStack);
 
-	char expression[] = "8+3-4*5+9/4*2";
-	char *p = expression;
-	while (*p) {
-		printf(">> Scanning %c ...\n", *p);
-		if (*p >= '0' && *p <= '9') {
-			operand_stack_push_back(&operandStack, *p - '0');
-		} else {
-			char operator;
-			while (operator_stack_get_back
-			       (&operatorStack, &operator)
-			       && operator_rank(operator) >= operator_rank(*p)) {
-				calculate(operator, &operandStack);
-				operator_stack_pop_back(&operatorStack);
-			}
-			operator_stack_push_back(&operatorStack, *p);
-		}
-		p++;
-	}
-	printf("   [ok] Scanning finished!\n");
+    char expression[] = "8+3-4*5+9/4*2";
+    char *p = expression;
+    while (*p) {
+        printf(">> Scanning %c ...\n", *p);
+        if (*p >= '0' && *p <= '9') {
+            operand_stack_push_back(&operandStack, *p - '0');
+        } else {
+            char operator;
+            while (operator_stack_get_back(&operatorStack, &operator)
+                   && operator_rank(operator) >= operator_rank(*p)) {
+                calculate(operator, &operandStack);
+                operator_stack_pop_back(&operatorStack);
+            }
+            operator_stack_push_back(&operatorStack, *p);
+        }
+        p++;
+    }
+    printf("   [ok] Scanning finished!\n");
 
-	char operator;
-	while (operatorStack.size > 0) {
-		operator_stack_get_back(&operatorStack, &operator);
-		calculate(operator, &operandStack);
-		operator_stack_pop_back(&operatorStack);
-	}
-	printf("   [ok] Calculating finished!\n");
+    char operator;
+    while (operatorStack.size > 0) {
+        operator_stack_get_back(&operatorStack, &operator);
+        calculate(operator, &operandStack);
+        operator_stack_pop_back(&operatorStack);
+    }
+    printf("   [ok] Calculating finished!\n");
 
-	show_operand_stack(&operandStack);
+    show_operand_stack(&operandStack);
 
-	operator_stack_destroy(&operatorStack);
-	operand_stack_destroy(&operandStack);
+    operator_stack_destroy(&operatorStack);
+    operand_stack_destroy(&operandStack);
 
-	return 0;
+    return 0;
 }

@@ -27,47 +27,47 @@
 
 void dlist_insert_back(DoublyLinkedListNode * position, void *element)
 {
-	DoublyLinkedListNode *node = dlist_create_node(element);
+    DoublyLinkedListNode *node = dlist_create_node(element);
 
-	/* link node and position->next */
-	node->next = position->next;
-	position->next->prev = node;
+    /* link node and position->next */
+    node->next = position->next;
+    position->next->prev = node;
 
-	/* linke position and node */
-	position->next = node;
-	node->prev = position;
+    /* linke position and node */
+    position->next = node;
+    node->prev = position;
 }
 
 void *dlist_remove_back(DoublyLinkedListNode * position)
 {
-	if (!position->next)
-		return NULL;
+    if (!position->next)
+        return NULL;
 
-	DoublyLinkedListNode *node = position->next;
-	position->next = node->next;
-	node->next->prev = position;
+    DoublyLinkedListNode *node = position->next;
+    position->next = node->next;
+    node->next->prev = position;
 
-	void *element = node->element;
-	free(node);
-	return element;
+    void *element = node->element;
+    free(node);
+    return element;
 }
 
 DoublyLinkedListNode *dlist_find(DoublyLinkedList * head, void *element,
-				 Comparator compare)
+                                 Comparator compare)
 {
-	dlist_for_each(position, head) {
-		if (position->next->element &&
-		    compare(position->next->element, element) == 0)
-			return position;
-	}
-	return NULL;
+    dlist_for_each(position, head) {
+        if (position->next->element &&
+            compare(position->next->element, element) == 0)
+            return position;
+    }
+    return NULL;
 }
 
 void dlist_destroy(DoublyLinkedList * head, Destructor destroy)
 {
-	while (head->next != head) {
-		void *element = dlist_remove_back(head);
-		if (destroy)
-			destroy(element);
-	}
+    while (head->next != head) {
+        void *element = dlist_remove_back(head);
+        if (destroy)
+            destroy(element);
+    }
 }

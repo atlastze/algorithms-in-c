@@ -29,33 +29,33 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	Graph graph;
-	graph_init(&graph, 0);
+    Graph graph;
+    graph_init(&graph, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	graph_read(fp, &graph);
-	fclose(fp);
+    graph_read(fp, &graph);
+    fclose(fp);
 
-	graph_write(stdout, &graph);
+    graph_write(stdout, &graph);
 
-	IntegerSequence s;
-	sequence_init(&s);
+    IntegerSequence s;
+    sequence_init(&s);
 
-	graph_reset_vertices(&graph);
-	graph_depth_first_search(&graph, 0, &s);
-	printf("\nThe depth-first-search order from vertex 0:\n");
-	sequence_write(stdout, &s, " ");
+    graph_reset_vertices(&graph);
+    graph_depth_first_search(&graph, 0, &s);
+    printf("\nThe depth-first-search order from vertex 0:\n");
+    sequence_write(stdout, &s, " ");
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	/* destroy graph */
-	graph_destroy(&graph);
+    /* destroy graph */
+    graph_destroy(&graph);
 
-	return 0;
+    return 0;
 }

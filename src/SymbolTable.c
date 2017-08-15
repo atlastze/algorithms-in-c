@@ -27,35 +27,34 @@
 
 void symtab_init(SymbolTable * symtab, HashCode hashCode)
 {
-	for (int i = 0; i < BUCKET_SIZE; i++)
-		slist_init(&symtab->list[i]);
-	symtab->hashCode = hashCode;
+    for (int i = 0; i < BUCKET_SIZE; i++)
+        slist_init(&symtab->list[i]);
+    symtab->hashCode = hashCode;
 }
 
 int symtab_enter(SymbolTable * symtab, Symbol * symbol)
 {
-	int i = symtab_hash(symtab, symbol->name);
-	slist_insert_back(&symtab->list[i], &symbol->link);
-	return i;
+    int i = symtab_hash(symtab, symbol->name);
+    slist_insert_back(&symtab->list[i], &symbol->link);
+    return i;
 }
 
 IntrusiveSListNode *symtab_find(SymbolTable * symtab, char *name)
 {
-	int i = symtab_hash(symtab, name);
-	slist_for_each(position, &(symtab->list[i])) {
-		Symbol *symbol =
-		    slist_entry_of_position(position, Symbol, link);
-		if (strcmp(symbol->name, name) == 0)
-			return position;
-	}
-	return NULL;
+    int i = symtab_hash(symtab, name);
+    slist_for_each(position, &(symtab->list[i])) {
+        Symbol *symbol = slist_entry_of_position(position, Symbol, link);
+        if (strcmp(symbol->name, name) == 0)
+            return position;
+    }
+    return NULL;
 }
 
 Symbol *symtab_retrieve(SymbolTable * symtab, char *name)
 {
-	IntrusiveSListNode *position;
-	position = symtab_find(symtab, name);
-	if (position)
-		return slist_entry_of_position(position, Symbol, link);
-	return NULL;
+    IntrusiveSListNode *position;
+    position = symtab_find(symtab, name);
+    if (position)
+        return slist_entry_of_position(position, Symbol, link);
+    return NULL;
 }

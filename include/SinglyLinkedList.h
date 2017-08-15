@@ -40,8 +40,8 @@
  */
 
 typedef struct _SinglyLinkedListNode {
-	void *element;
-	struct _SinglyLinkedListNode *next;
+    void *element;
+    struct _SinglyLinkedListNode *next;
 
 } SinglyLinkedListNode;
 
@@ -68,11 +68,11 @@ typedef SinglyLinkedListNode SinglyLinkedList;
  */
 static inline SinglyLinkedListNode *slist_create_node(void *element)
 {
-	SinglyLinkedListNode *node =
-	    (SinglyLinkedListNode *) malloc(sizeof(SinglyLinkedListNode));
-	node->element = element;
-	node->next = NULL;
-	return node;
+    SinglyLinkedListNode *node =
+        (SinglyLinkedListNode *) malloc(sizeof(SinglyLinkedListNode));
+    node->element = element;
+    node->next = NULL;
+    return node;
 }
 
 /**
@@ -81,8 +81,8 @@ static inline SinglyLinkedListNode *slist_create_node(void *element)
  */
 static inline void slist_init(SinglyLinkedList * head)
 {
-	head->element = NULL;
-	head->next = NULL;
+    head->element = NULL;
+    head->next = NULL;
 }
 
 /**
@@ -109,7 +109,7 @@ void *slist_remove_back(SinglyLinkedListNode * position);
  * Returns the position of the node (i.e. the previous node)
  */
 SinglyLinkedListNode *slist_find(SinglyLinkedList * head, void *element,
-				 Comparator compare);
+                                 Comparator compare);
 
 /**
  * slist_destroy - destroy a list

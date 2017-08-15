@@ -28,6 +28,6 @@
 
 int main(int argc, char *argv[])
 {
-	printf("%lf\n", real_time());
-	return 0;
+    printf("%lf\n", real_time());
+    return 0;
 }

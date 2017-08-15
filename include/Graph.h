@@ -72,28 +72,28 @@ typedef IntrusiveSListNode EdgeLink;
 typedef struct _VertexInfo VertexInfo;
 
 typedef struct _Vertex {
-	/* Part 1: index of vertex */
-	int id;
+    /* Part 1: index of vertex */
+    int id;
 
-	/* Part 2: adjacent vertices list head */
-	EdgeLink firstedge;
+    /* Part 2: adjacent vertices list head */
+    EdgeLink firstedge;
 
-	/* Part 3: vertex state */
-	int vertstate;
+    /* Part 3: vertex state */
+    int vertstate;
 } Vertex;
 
 typedef struct _Edge {
-	/* Part 1: edge weight */
-	double weight;
+    /* Part 1: edge weight */
+    double weight;
 
-	/* Part 2: adjacent vertex index */
-	int neighbor;
+    /* Part 2: adjacent vertex index */
+    int neighbor;
 
-	/* Part 3: adjacent vertices list link */
-	EdgeLink edgelink;
+    /* Part 3: adjacent vertices list link */
+    EdgeLink edgelink;
 
-	/* Part 4: edge state */
-	int edgestate;
+    /* Part 4: edge state */
+    int edgestate;
 } Edge;
 
 /**
@@ -105,8 +105,8 @@ VECTOR_DECL(vertexlist, Vertex, VertexList)
  * Graph is defined as a vector of vertices
  */
 typedef struct _Graph {
-	int isdirected;
-	VertexList vertices;
+    int isdirected;
+    VertexList vertices;
 } Graph;
 
  /* number of vertices */
@@ -116,28 +116,28 @@ typedef struct _Graph {
 #define graph_vertex_entry(graph, i) (&((graph)->vertices.element[i]))
 
 #define graph_vertex_is_marked(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate == 1)
+    (graph_vertex_entry(graph, i)->vertstate == 1)
 
 #define graph_vertex_is_unmarked(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate == 0)
+    (graph_vertex_entry(graph, i)->vertstate == 0)
 
 #define graph_mark_vertex(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate = 1)
+    (graph_vertex_entry(graph, i)->vertstate = 1)
 
 #define graph_unmark_vertex(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate = 0)
+    (graph_vertex_entry(graph, i)->vertstate = 0)
 
 #define graph_mark_vertex_grey(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate = 2)
+    (graph_vertex_entry(graph, i)->vertstate = 2)
 
 #define graph_vertex_is_grey(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate == 2)
+    (graph_vertex_entry(graph, i)->vertstate == 2)
 
 #define graph_mark_vertex_black(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate = 1)
+    (graph_vertex_entry(graph, i)->vertstate = 1)
 
 #define graph_vertex_is_black(graph, i) \
-        (graph_vertex_entry(graph, i)->vertstate == 1)
+    (graph_vertex_entry(graph, i)->vertstate == 1)
 
 /* convert intrusive singly linked list node to edge */
 #define graph_edge_entry(pe) slist_entry(pe, Edge, edgelink)
@@ -204,10 +204,10 @@ void graph_write(FILE * fp, Graph * graph);
  * @fp: file pointer, the file includes lines of edge information(endpoints and
  *      weight), for example:
  *      8 directed
- *	0	1	12.0
- *	1	3	9.0
- *	1	2	15.0
- *	...
+ *    0    1    12.0
+ *    1    3    9.0
+ *    1    2    15.0
+ *    ...
  */
 void graph_read(FILE * fp, Graph * graph);
 
@@ -233,7 +233,7 @@ void graph_reset_edges(Graph * graph);
  * NOTE: If @preorder or @postorder is not needed, pass NULL.
  */
 void graph_depth_first_order(Graph * graph, int i, IntegerSequence * preorder,
-	                         IntegerSequence * postorder);
+                             IntegerSequence * postorder);
 
 /**
  * graph_depth_first_search - depth first searching graph
@@ -322,9 +322,9 @@ void graph_prim(Graph * graph, EdgeListGraph * path);
  * proportional to V and time proportional to E log V (in the worst case).
  */
 void graph_dijkstra_linear_search(Graph * graph, int source,
-				  EdgeListGraph * path);
+                                  EdgeListGraph * path);
 void graph_dijkstra_priority_queue(Graph * graph, int source,
-				   EdgeListGraph * path);
+                                   EdgeListGraph * path);
 void graph_dijkstra(Graph * graph, int source, EdgeListGraph * path);
 
 /**

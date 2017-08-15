@@ -29,34 +29,34 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	Graph graph;
-	graph_init(&graph, 0);
+    Graph graph;
+    graph_init(&graph, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	graph_read(fp, &graph);
-	fclose(fp);
+    graph_read(fp, &graph);
+    fclose(fp);
 
-	graph_write(stdout, &graph);
+    graph_write(stdout, &graph);
 
-	EdgeListGraph path;
+    EdgeListGraph path;
 
-	egraph_init(&path, 0);
+    egraph_init(&path, 0);
 
-	graph_dijkstra_linear_search(&graph, 0, &path);
+    graph_dijkstra_linear_search(&graph, 0, &path);
 
-	printf("the shortest-paths:\n");
-	egraph_write(stdout, &path);
+    printf("the shortest-paths:\n");
+    egraph_write(stdout, &path);
 
-	egraph_destroy(&path);
+    egraph_destroy(&path);
 
-	/* destroy graph */
-	graph_destroy(&graph);
+    /* destroy graph */
+    graph_destroy(&graph);
 
-	return 0;
+    return 0;
 }

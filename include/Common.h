@@ -26,14 +26,14 @@
 #define COMMON_H
 
 #define COMPARE_DECL(function_name, type) \
-	int function_name(const void *a, const void *b);
+    int function_name(const void *a, const void *b);
 
 #define COMPARE_IMPL(function_name, type) \
-	int function_name(const void *a, const void *b) \
-	{ \
-		type diff = *(type *)a - *(type *)b; \
-		return diff == 0 ? 0 : (diff < 0 ? -1 : 1); \
-	} \
+    int function_name(const void *a, const void *b) \
+    { \
+        type diff = *(type *)a - *(type *)b; \
+        return diff == 0 ? 0 : (diff < 0 ? -1 : 1); \
+    } \
 
 typedef int (*Comparator) (const void *a, const void *b);
 typedef void (*Destructor) (void *);

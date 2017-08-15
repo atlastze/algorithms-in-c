@@ -30,16 +30,16 @@ VECTOR_IMPL(sequence, int, IntegerSequence)
 
 void sequence_read(FILE * fp, IntegerSequence * s)
 {
-	int element;
-	while (fscanf(fp, "%d", &element) == 1) {
-		sequence_push_back(s, element);
-	}
+    int element;
+    while (fscanf(fp, "%d", &element) == 1) {
+        sequence_push_back(s, element);
+    }
 }
 
 void sequence_write(FILE * fp, IntegerSequence * s, char *delimiter)
 {
-	for (int i = 0; i < s->size; i++) {
-		fprintf(fp, "%d%s", sequence_entry(s, i), delimiter);
-	}
-	fprintf(fp, "\n");
+    for (int i = 0; i < s->size; i++) {
+        fprintf(fp, "%d%s", sequence_entry(s, i), delimiter);
+    }
+    fprintf(fp, "\n");
 }

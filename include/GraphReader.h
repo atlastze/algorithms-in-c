@@ -26,6 +26,13 @@
 #ifndef GRAPH_READER_H
 #define GRAPH_READER_H
 
+#include "exception.h"
+
+#define INVALID_CHARACTER 1
+#define INVALID_KEYWORD   2
+#define INVALID_NUMBER    3
+#define SYNTAX_ERROR      4
+
 /* Forward declaration */
 struct _EdgeListGraph;
 
@@ -33,6 +40,6 @@ struct _EdgeListGraph;
 void graph2dot(FILE * fp, struct _EdgeListGraph *egraph);
 
 /* Read a graph from a dot file */
-int dot2graph(FILE * fp, struct _EdgeListGraph *egraph);
+void dot2graph(FILE * fp, struct _EdgeListGraph *egraph); /* throws */
 
 #endif /* GRAPH_READER_H */

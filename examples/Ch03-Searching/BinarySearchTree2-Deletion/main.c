@@ -29,47 +29,46 @@
 
 int main(int argc, char *argv[])
 {
-	BinarySearchTree *root = NULL;
-	BinarySearchTree *position;
+    BinarySearchTree *root = NULL;
+    BinarySearchTree *position;
 
-	FILE *fp = stdin;
-	if (argc >= 2) {
-		fp = fopen(argv[1], "r");
-		if (!fp)
-			exit(1);
-	} else {
-		return 0;
-	}
+    FILE *fp = stdin;
+    if (argc >= 2) {
+        fp = fopen(argv[1], "r");
+        if (!fp)
+            exit(1);
+    } else {
+        return 0;
+    }
 
-	root = bst_read(fp);
+    root = bst_read(fp);
 
-	if (argc >= 2)
-		fclose(fp);
+    if (argc >= 2)
+        fclose(fp);
 
-	printf("preorder traversal:\n");
-	bst_write(stdout, root);
+    printf("preorder traversal:\n");
+    bst_write(stdout, root);
 
-	printf("\ninorder traversal:\n");
-	bst_inorder(root);
-	printf("\n");
+    printf("\ninorder traversal:\n");
+    bst_inorder(root);
+    printf("\n");
 
-	BSTelementtype element;
-	printf
-	    ("\nplease input the element to be deleted (non-digits to stop): ");
-	while (scanf("%d", &element) == 1) {
-		root = bst_remove(root, element);
+    BSTelementtype element;
+    printf("\nplease input the element to be deleted (non-digits to stop): ");
+    while (scanf("%d", &element) == 1) {
+        root = bst_remove(root, element);
 
-		printf("\npreorder traversal:\n");
-		bst_write(stdout, root);
+        printf("\npreorder traversal:\n");
+        bst_write(stdout, root);
 
-		printf("\ninorder traversal:\n");
-		bst_inorder(root);
+        printf("\ninorder traversal:\n");
+        bst_inorder(root);
 
-		printf
-		    ("\n\nplease input the element to be deleted (non-digits to stop): ");
-	}
+        printf
+            ("\n\nplease input the element to be deleted (non-digits to stop): ");
+    }
 
-	bst_destroy(root);
+    bst_destroy(root);
 
-	return 0;
+    return 0;
 }

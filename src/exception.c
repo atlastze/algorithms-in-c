@@ -23,44 +23,6 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BINARY_SEARCH_TREE_H
-#define BINARY_SEARCH_TREE_H
+#include "exception.h"
 
-#include <stdio.h>
-
-/**
- * Implementation of Binary Search Tree
- * see Mark Allen Wesiss, Data Structures and Algorithm Analysis in C, 2e
- */
-
-typedef int BSTelementtype;
-
-typedef struct _BinarySearchTree {
-    BSTelementtype element;
-    struct _BinarySearchTree *lchild;
-    struct _BinarySearchTree *rchild;
-} BinarySearchTree;
-
-#define bst_retrieve(position) ((position)->element)
-
-BinarySearchTree *bst_create_node(BSTelementtype element);
-void bst_destroy(BinarySearchTree * root);
-BinarySearchTree *bst_search(BinarySearchTree * root, BSTelementtype element);
-BinarySearchTree *bst_insert(BinarySearchTree * root, BSTelementtype element);
-BinarySearchTree *bst_remove(BinarySearchTree * root, BSTelementtype element);
-BinarySearchTree *bst_minimum(BinarySearchTree * root);
-BinarySearchTree *bst_maximum(BinarySearchTree * root);
-
-BinarySearchTree *bst_read(FILE * fp);
-
-/**
- * preorder traversal
- */
-void bst_write(FILE * fp, BinarySearchTree * root);
-
-/**
- * inorder traversal
- */
-void bst_inorder(BinarySearchTree * root);
-
-#endif /* BINARY_SEARCH_TREE_H */
+struct JmpStack jmpStack = { NULL, 0 };

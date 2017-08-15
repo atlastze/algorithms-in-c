@@ -37,57 +37,57 @@
 
 void graph_incorrect_dfs(Graph * graph, int i, IntegerSequence * s)
 {
-	IntegerSequence stack;	/* stack of vertices */
-	sequence_init(&stack);
+    IntegerSequence stack;      /* stack of vertices */
+    sequence_init(&stack);
 
-	sequence_push_front(&stack, i);
-	graph_mark_vertex(graph, i);
+    sequence_push_front(&stack, i);
+    graph_mark_vertex(graph, i);
 
-	while (stack.size != 0) {
-		sequence_get_front(&stack, &i);
-		sequence_push_back(s, i);
-		sequence_pop_front(&stack);
+    while (stack.size != 0) {
+        sequence_get_front(&stack, &i);
+        sequence_push_back(s, i);
+        sequence_pop_front(&stack);
 
-		slist_for_each(pe, &graph_vertex_entry(graph, i)->firstedge) {
-			Edge *edge = graph_edge_entry_of_position(pe);
-			if (graph_vertex_is_unmarked(graph, edge->neighbor)) {
-				sequence_push_front(&stack, edge->neighbor);
-				graph_mark_vertex(graph, edge->neighbor);
-			}
-		}
-	}
-	sequence_destroy(&stack);
+        slist_for_each(pe, &graph_vertex_entry(graph, i)->firstedge) {
+            Edge *edge = graph_edge_entry_of_position(pe);
+            if (graph_vertex_is_unmarked(graph, edge->neighbor)) {
+                sequence_push_front(&stack, edge->neighbor);
+                graph_mark_vertex(graph, edge->neighbor);
+            }
+        }
+    }
+    sequence_destroy(&stack);
 }
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	Graph graph;
-	graph_init(&graph, 0);
+    Graph graph;
+    graph_init(&graph, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	graph_read(fp, &graph);
-	fclose(fp);
+    graph_read(fp, &graph);
+    fclose(fp);
 
-	graph_write(stdout, &graph);
+    graph_write(stdout, &graph);
 
-	IntegerSequence s;
-	sequence_init(&s);
+    IntegerSequence s;
+    sequence_init(&s);
 
-	graph_reset_vertices(&graph);
-	graph_incorrect_dfs(&graph, 0, &s);
-	printf("\nThe depth-first-search order from vertex 0:\n");
-	sequence_write(stdout, &s, " ");
+    graph_reset_vertices(&graph);
+    graph_incorrect_dfs(&graph, 0, &s);
+    printf("\nThe depth-first-search order from vertex 0:\n");
+    sequence_write(stdout, &s, " ");
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	/* destroy graph */
-	graph_destroy(&graph);
+    /* destroy graph */
+    graph_destroy(&graph);
 
-	return 0;
+    return 0;
 }

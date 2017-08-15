@@ -29,31 +29,31 @@
 
 int main(int argc, char *argv[])
 {
-	/* declare and initialize symbol table */
-	SymbolTable symtab;
-	symtab_init(&symtab, BKDRHash);
+    /* declare and initialize symbol table */
+    SymbolTable symtab;
+    symtab_init(&symtab, BKDRHash);
 
-	/* symbol node is static, so we need not deleted them at the end of
-	 * the function. Alternatively, we can allocate symbol dynamically and
-	 * managed memeory allocated manually.
-	 */
-	Symbol var1 = { "age", 1, 2 };
-	Symbol var2 = { "birthday", 3, 4 };
-	Symbol var3 = { "school", 5, 6 };
+    /* symbol node is static, so we need not deleted them at the end of
+     * the function. Alternatively, we can allocate symbol dynamically and
+     * managed memeory allocated manually.
+     */
+    Symbol var1 = { "age", 1, 2 };
+    Symbol var2 = { "birthday", 3, 4 };
+    Symbol var3 = { "school", 5, 6 };
 
-	/* enter symbols */
-	symtab_enter(&symtab, &var1);
-	symtab_enter(&symtab, &var2);
-	symtab_enter(&symtab, &var3);
+    /* enter symbols */
+    symtab_enter(&symtab, &var1);
+    symtab_enter(&symtab, &var2);
+    symtab_enter(&symtab, &var3);
 
-	/* retrieve symbol by name */
-	Symbol *symbol = symtab_retrieve(&symtab, "birthday");
-	if (symbol) {
-		printf("Symbol Info\n\tname: %s\n\tline: %d\n\tcolumn: %d\n",
-		       symbol->name, symbol->line, symbol->column);
-	} else {
-		printf("Symbol not found!\n");
-	}
+    /* retrieve symbol by name */
+    Symbol *symbol = symtab_retrieve(&symtab, "birthday");
+    if (symbol) {
+        printf("Symbol Info\n\tname: %s\n\tline: %d\n\tcolumn: %d\n",
+               symbol->name, symbol->line, symbol->column);
+    } else {
+        printf("Symbol not found!\n");
+    }
 
-	return 0;
+    return 0;
 }

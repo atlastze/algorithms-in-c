@@ -29,8 +29,8 @@
 #include "SinglyLinkedList.h"
 
 typedef struct _PolynomialTerm {
-	int coef;
-	int exp;
+    int coef;
+    int exp;
 } PolynomialTerm;
 
 typedef SinglyLinkedList Polynomial;

@@ -46,17 +46,17 @@
  */
 
 typedef struct _EdgeNode {
-	int start;		/* start vertex index  */
-	int end;		/* end vertex index    */
-	double weight;		/* weight of the edge  */
+    int start;                  /* start vertex index  */
+    int end;                    /* end vertex index    */
+    double weight;              /* weight of the edge  */
 } EdgeNode;
 
 VECTOR_DECL(edgelist, EdgeNode, EdgeList)
 
 typedef struct _EdgeListGraph {
-	int vcount;		/* count of vertices   */
-	int isdirected;		/* directed graph flag */
-	EdgeList edges;		/* array of edges      */
+    int vcount;                 /* count of vertices   */
+    int isdirected;             /* directed graph flag */
+    EdgeList edges;             /* array of edges      */
 } EdgeListGraph;
 
 #define egraph_edge_entry(graph, i) (graph->edges.element[i])
@@ -74,7 +74,7 @@ void egraph_init(EdgeListGraph * graph, int isdirected);
 void egraph_destroy(EdgeListGraph * graph);
 
 int egraph_set_edge(EdgeListGraph * graph, int i, int start, int end,
-		    double weight);
+                    double weight);
 
 int egraph_add_edge(EdgeListGraph * graph, int start, int end, double weight);
 

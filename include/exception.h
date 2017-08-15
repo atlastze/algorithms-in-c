@@ -23,44 +23,50 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BINARY_SEARCH_TREE_H
-#define BINARY_SEARCH_TREE_H
+#ifndef EXCEPTION_H
+#define EXCEPTION_H
 
-#include <stdio.h>
+#include <stdlib.h>
+#include <setjmp.h>
 
-/**
- * Implementation of Binary Search Tree
- * see Mark Allen Wesiss, Data Structures and Algorithm Analysis in C, 2e
- */
+#define RETHROWABLE (_rethrowable_ || \
+    (!_rethrowable_ && pop_jmp() && (_rethrowable_ = 1)))
 
-typedef int BSTelementtype;
+#define try \
+    int _index = push_jmp(); \
+    int _except_code_ = setjmp(jmpStack.buf[_index]); \
+    volatile int _rethrowable_ = 0; \
+    if (_except_code_ == 0)
 
-typedef struct _BinarySearchTree {
-    BSTelementtype element;
-    struct _BinarySearchTree *lchild;
-    struct _BinarySearchTree *rchild;
-} BinarySearchTree;
+#define catch(e) \
+    else if(_except_code_ && RETHROWABLE)
 
-#define bst_retrieve(position) ((position)->element)
+#define finally \
+    else if(RETHROWABLE)
 
-BinarySearchTree *bst_create_node(BSTelementtype element);
-void bst_destroy(BinarySearchTree * root);
-BinarySearchTree *bst_search(BinarySearchTree * root, BSTelementtype element);
-BinarySearchTree *bst_insert(BinarySearchTree * root, BSTelementtype element);
-BinarySearchTree *bst_remove(BinarySearchTree * root, BSTelementtype element);
-BinarySearchTree *bst_minimum(BinarySearchTree * root);
-BinarySearchTree *bst_maximum(BinarySearchTree * root);
+#define throw(e) \
+    if(jmpStack.count > 0) longjmp(jmpStack.buf[jmpStack.count - 1], e)
 
-BinarySearchTree *bst_read(FILE * fp);
+struct JmpStack {
+    jmp_buf *buf;
+    unsigned int count;
+};
 
-/**
- * preorder traversal
- */
-void bst_write(FILE * fp, BinarySearchTree * root);
+extern struct JmpStack jmpStack;
 
-/**
- * inorder traversal
- */
-void bst_inorder(BinarySearchTree * root);
+static inline int push_jmp(void)
+{
+    jmpStack.buf =
+        realloc(jmpStack.buf, sizeof(jmp_buf) * (jmpStack.count + 1));
+    return jmpStack.count++;
+}
 
-#endif /* BINARY_SEARCH_TREE_H */
+static inline int pop_jmp(void)
+{
+    if (jmpStack.count > 0)
+        jmpStack.buf =
+            realloc(jmpStack.buf, sizeof(jmp_buf) * (--jmpStack.count));
+    return 1;
+}
+
+#endif /* EXCEPTION_H */

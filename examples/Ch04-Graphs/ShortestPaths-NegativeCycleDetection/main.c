@@ -29,48 +29,48 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	Graph graph;
-	graph_init(&graph, 1);
+    Graph graph;
+    graph_init(&graph, 1);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	graph_read(fp, &graph);
-	fclose(fp);
+    graph_read(fp, &graph);
+    fclose(fp);
 
-	graph_write(stdout, &graph);
+    graph_write(stdout, &graph);
 
-	EdgeListGraph path;
+    EdgeListGraph path;
 
-	egraph_init(&path, 1);
+    egraph_init(&path, 1);
 
-	if (graph_bellman_ford(&graph, 0, &path))
-		printf("There is no negative weighted cycle!\n");
-	else {
-		Graph subgraph;
-		graph_init(&subgraph, 1);
-		egraph_write(stdout, &path);
-		graph_create(&path, &subgraph);
-		graph_write(stdout, &subgraph);
+    if (graph_bellman_ford(&graph, 0, &path))
+        printf("There is no negative weighted cycle!\n");
+    else {
+        Graph subgraph;
+        graph_init(&subgraph, 1);
+        egraph_write(stdout, &path);
+        graph_create(&path, &subgraph);
+        graph_write(stdout, &subgraph);
 
-		IntegerSequence s;
-		sequence_init(&s);
-		graph_tarjan_scc(&subgraph, &s);
-		printf("the strongly connected components are:\n");
-		sequence_write(stdout, &s, " ");
+        IntegerSequence s;
+        sequence_init(&s);
+        graph_tarjan_scc(&subgraph, &s);
+        printf("the strongly connected components are:\n");
+        sequence_write(stdout, &s, " ");
 
-		sequence_destroy(&s);
-		graph_destroy(&subgraph);
-	}
+        sequence_destroy(&s);
+        graph_destroy(&subgraph);
+    }
 
-	egraph_destroy(&path);
+    egraph_destroy(&path);
 
-	/* destroy graph */
-	graph_destroy(&graph);
+    /* destroy graph */
+    graph_destroy(&graph);
 
-	return 0;
+    return 0;
 }

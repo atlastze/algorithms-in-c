@@ -33,15 +33,15 @@
 #define BUCKET_SIZE 97
 
 typedef struct _Symbol {
-	char name[64];
-	int line;
-	int column;
-	IntrusiveSListNode link;
+    char name[64];
+    int line;
+    int column;
+    IntrusiveSListNode link;
 } Symbol;
 
 typedef struct _SymbolTable {
-	IntrusiveSList list[BUCKET_SIZE];
-	HashCode hashCode;	/* hash code function pointer */
+    IntrusiveSList list[BUCKET_SIZE];
+    HashCode hashCode;          /* hash code function pointer */
 } SymbolTable;
 
 /**
@@ -92,7 +92,7 @@ Symbol *symtab_retrieve(SymbolTable * symtab, char *name);
  */
 static inline int symtab_hash(SymbolTable * symtab, char *name)
 {
-	return symtab->hashCode(name, strlen(name)) % BUCKET_SIZE;
+    return symtab->hashCode(name, strlen(name)) % BUCKET_SIZE;
 }
 
 #endif /* SYMBOLTABLE_H */

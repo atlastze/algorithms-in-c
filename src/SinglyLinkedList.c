@@ -27,39 +27,39 @@
 
 void slist_insert_back(SinglyLinkedListNode * position, void *element)
 {
-	SinglyLinkedListNode *node = slist_create_node(element);
-	node->next = position->next;
-	position->next = node;
+    SinglyLinkedListNode *node = slist_create_node(element);
+    node->next = position->next;
+    position->next = node;
 }
 
 void *slist_remove_back(SinglyLinkedListNode * position)
 {
-	if (!position->next)
-		return NULL;
+    if (!position->next)
+        return NULL;
 
-	SinglyLinkedListNode *node = position->next;
-	position->next = node->next;
-	void *element = node->element;
-	free(node);
-	return element;
+    SinglyLinkedListNode *node = position->next;
+    position->next = node->next;
+    void *element = node->element;
+    free(node);
+    return element;
 }
 
 SinglyLinkedListNode *slist_find(SinglyLinkedList * head, void *element,
-				 Comparator compare)
+                                 Comparator compare)
 {
-	slist_for_each(position, head) {
-		if (position->next->element
-		    && compare(position->next->element, element) == 0)
-			return position;
-	}
-	return NULL;
+    slist_for_each(position, head) {
+        if (position->next->element
+            && compare(position->next->element, element) == 0)
+            return position;
+    }
+    return NULL;
 }
 
 void slist_destroy(SinglyLinkedList * head, Destructor destroy)
 {
-	while (head->next) {
-		void *element = slist_remove_back(head);
-		if (destroy)
-			destroy(element);
-	}
+    while (head->next) {
+        void *element = slist_remove_back(head);
+        if (destroy)
+            destroy(element);
+    }
 }

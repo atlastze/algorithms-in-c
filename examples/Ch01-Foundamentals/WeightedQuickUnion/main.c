@@ -29,24 +29,24 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	DisjointSet set;
-	set_init(&set, 0);
+    DisjointSet set;
+    set_init(&set, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	set_read(fp, &set);
-	fclose(fp);
+    set_read(fp, &set);
+    fclose(fp);
 #if 0
-	set_write(stdout, &set);
+    set_write(stdout, &set);
 #endif
-	printf("%d components\n", set.count);
+    printf("%d components\n", set.count);
 
-	set_destroy(&set);
+    set_destroy(&set);
 
-	return 0;
+    return 0;
 }

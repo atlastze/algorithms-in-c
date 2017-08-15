@@ -32,102 +32,101 @@
 /* Quick sort algorithm with Hoare partition scheme */
 void quicksort1(IntegerSequence * a, int startIndex, int endIndex)
 {
-	if (startIndex < 0 || endIndex < 0 || endIndex - startIndex <= 0)
-		return;
-	int pivot = vector_entry(a, startIndex);
-	int i, j;
-	for (i = startIndex, j = endIndex;; i++, j--) {
-		while (vector_entry(a, i) < pivot)
-			i++;
-		while (vector_entry(a, j) > pivot)
-			j--;
+    if (startIndex < 0 || endIndex < 0 || endIndex - startIndex <= 0)
+        return;
+    int pivot = vector_entry(a, startIndex);
+    int i, j;
+    for (i = startIndex, j = endIndex;; i++, j--) {
+        while (vector_entry(a, i) < pivot)
+            i++;
+        while (vector_entry(a, j) > pivot)
+            j--;
 
-		if (i >= j)
-			break;
+        if (i >= j)
+            break;
 
-		sequence_swap(a, i, j);
-	}
-	sequence_swap(a, startIndex, j);
+        sequence_swap(a, i, j);
+    }
+    sequence_swap(a, startIndex, j);
 
-	quicksort1(a, startIndex, j - 1);
-	quicksort1(a, j + 1, endIndex);
+    quicksort1(a, startIndex, j - 1);
+    quicksort1(a, j + 1, endIndex);
 }
 
 /* Quick sort algorithm with Lomuto partition scheme */
 void quicksort2(IntegerSequence * a, int startIndex, int endIndex)
 {
-	if (startIndex < 0 || endIndex < 0 || endIndex - startIndex <= 0)
-		return;
-	int pivot = vector_entry(a, endIndex);
-	int i = startIndex;	/* place for swapping */
-	int j;
-	for (j = startIndex; j < endIndex; j++) {
-		if (vector_entry(a, j) <= pivot) {
-			sequence_swap(a, i, j);
-			i++;
-		}
-	}
-	sequence_swap(a, i, endIndex);
+    if (startIndex < 0 || endIndex < 0 || endIndex - startIndex <= 0)
+        return;
+    int pivot = vector_entry(a, endIndex);
+    int i = startIndex;         /* place for swapping */
+    int j;
+    for (j = startIndex; j < endIndex; j++) {
+        if (vector_entry(a, j) <= pivot) {
+            sequence_swap(a, i, j);
+            i++;
+        }
+    }
+    sequence_swap(a, i, endIndex);
 
-	quicksort2(a, startIndex, i - 1);
-	quicksort2(a, i + 1, endIndex);
+    quicksort2(a, startIndex, i - 1);
+    quicksort2(a, i + 1, endIndex);
 }
 
 int compare(int a, int b)
 {
-	return a - b;
+    return a - b;
 }
 
 int main(int argc, char *argv[])
 {
-	IntegerSequence a, b, c;
+    IntegerSequence a, b, c;
 
-	/* initialize vector, default capacity: 4 */
-	sequence_init(&a);
-	sequence_init(&b);
-	sequence_init(&c);
+    /* initialize vector, default capacity: 4 */
+    sequence_init(&a);
+    sequence_init(&b);
+    sequence_init(&c);
 
-	srand(time(NULL));
-	int n = 200;
-	while (n < 1000000) {
-		sequence_clear(&a);
-		sequence_clear(&b);
-		sequence_clear(&c);
-		/* populate vector with random numbers */
-		for (int i = 0; i < n; i++)
-			sequence_push_back(&c, rand());
+    srand(time(NULL));
+    int n = 200;
+    while (n < 1000000) {
+        sequence_clear(&a);
+        sequence_clear(&b);
+        sequence_clear(&c);
+        /* populate vector with random numbers */
+        for (int i = 0; i < n; i++)
+            sequence_push_back(&c, rand());
 
-		sequence_copy(&a, &c);
-		sequence_copy(&b, &c);
-		/* quick sort */
-		double t0, t1;
-		double dt1, dt2, dt3;
+        sequence_copy(&a, &c);
+        sequence_copy(&b, &c);
+        /* quick sort */
+        double t0, t1;
+        double dt1, dt2, dt3;
 
-		t0 = real_time();
-		quicksort1(&b, 0, n - 1);
-		t1 = real_time();
-		dt1 = t1 - t0;
+        t0 = real_time();
+        quicksort1(&b, 0, n - 1);
+        t1 = real_time();
+        dt1 = t1 - t0;
 
-		t0 = real_time();
-		quicksort2(&a, 0, n - 1);
-		t1 = real_time();
-		dt2 = t1 - t0;
+        t0 = real_time();
+        quicksort2(&a, 0, n - 1);
+        t1 = real_time();
+        dt2 = t1 - t0;
 
-		t0 = real_time();
-		/*sequence_quicksort(&c, compare); */
-		quicksort2(&c, 0, n - 1);
-		t1 = real_time();
-		dt3 = t1 - t0;
+        t0 = real_time();
+        /*sequence_quicksort(&c, compare); */
+        quicksort2(&c, 0, n - 1);
+        t1 = real_time();
+        dt3 = t1 - t0;
 
-		printf("n: %7d, dt2/dt1: %lf, dt3/dt2: %lf\n", n, dt2 / dt1,
-		       dt3 / dt2);
-		/*print(&v); */
-		n *= 2;
-	}
+        printf("n: %7d, dt2/dt1: %lf, dt3/dt2: %lf\n", n, dt2 / dt1, dt3 / dt2);
+        /*print(&v); */
+        n *= 2;
+    }
 
-	sequence_destroy(&a);
-	sequence_destroy(&b);
-	sequence_destroy(&c);
+    sequence_destroy(&a);
+    sequence_destroy(&b);
+    sequence_destroy(&c);
 
-	return 0;
+    return 0;
 }

@@ -30,24 +30,24 @@ COMPARE_IMPL(intcmp, int)
 
 int main(int argc, char *argv[])
 {
-	int a[] = { 1, 2, 3, 4, 5 };
-	SinglyLinkedList head;
-	slist_init(&head);
-	slist_insert_back(&head, &a[0]);
-	slist_insert_back(&head, &a[1]);
-	slist_insert_back(&head, &a[2]);
-	slist_insert_back(&head, &a[3]);
-	slist_insert_back(&head, &a[4]);
-	slist_for_each(position, &head) {
-		printf("node: %p, element: %d\n", position->next,
-		       *((int *)(position->next->element)));
-	}
+    int a[] = { 1, 2, 3, 4, 5 };
+    SinglyLinkedList head;
+    slist_init(&head);
+    slist_insert_back(&head, &a[0]);
+    slist_insert_back(&head, &a[1]);
+    slist_insert_back(&head, &a[2]);
+    slist_insert_back(&head, &a[3]);
+    slist_insert_back(&head, &a[4]);
+    slist_for_each(position, &head) {
+        printf("node: %p, element: %d\n", position->next,
+               *((int *)(position->next->element)));
+    }
 
-	int index = 4;
-	SinglyLinkedListNode *position = slist_find(&head, &a[index], intcmp);
-	printf("find %d at node %p\n", a[index], position->next);
+    int index = 4;
+    SinglyLinkedListNode *position = slist_find(&head, &a[index], intcmp);
+    printf("find %d at node %p\n", a[index], position->next);
 
-	slist_destroy(&head, NULL);
+    slist_destroy(&head, NULL);
 
-	return 0;
+    return 0;
 }

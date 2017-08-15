@@ -30,24 +30,24 @@ COMPARE_IMPL(intcmp, int)
 
 int main(int argc, char *argv[])
 {
-	int a[] = { 1, 2, 3, 4, 5 };
-	DoublyLinkedList head;
-	dlist_init(&head);
-	dlist_insert_back(&head, &a[0]);
-	dlist_insert_back(&head, &a[1]);
-	dlist_insert_back(&head, &a[2]);
-	dlist_insert_back(&head, &a[3]);
-	dlist_insert_back(&head, &a[4]);
-	dlist_for_each(position, &head) {
-		printf("node: %p, element: %d\n", position->next,
-		       *((int *)(position->next->element)));
-	}
+    int a[] = { 1, 2, 3, 4, 5 };
+    DoublyLinkedList head;
+    dlist_init(&head);
+    dlist_insert_back(&head, &a[0]);
+    dlist_insert_back(&head, &a[1]);
+    dlist_insert_back(&head, &a[2]);
+    dlist_insert_back(&head, &a[3]);
+    dlist_insert_back(&head, &a[4]);
+    dlist_for_each(position, &head) {
+        printf("node: %p, element: %d\n", position->next,
+               *((int *)(position->next->element)));
+    }
 
-	int index = 4;
-	DoublyLinkedListNode *position = dlist_find(&head, &a[index], intcmp);
-	printf("find %d at node %p\n", a[index], position->next);
+    int index = 4;
+    DoublyLinkedListNode *position = dlist_find(&head, &a[index], intcmp);
+    printf("find %d at node %p\n", a[index], position->next);
 
-	dlist_destroy(&head, NULL);
+    dlist_destroy(&head, NULL);
 
-	return 0;
+    return 0;
 }

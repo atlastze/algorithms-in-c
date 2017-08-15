@@ -28,28 +28,28 @@
 
 int compare(int a, int b)
 {
-	return a - b;
+    return a - b;
 }
 
 int main(int argc, char *argv[])
 {
-	int a[] = { 5, 7, 4, 2, 11, 10, 6 };
-	IntegerSequence s;
+    int a[] = { 5, 7, 4, 2, 11, 10, 6 };
+    IntegerSequence s;
 
-	/* initialize vector, default capacity: 4 */
-	sequence_init(&s);
+    /* initialize vector, default capacity: 4 */
+    sequence_init(&s);
 
-	/* populate vector, reallocate capacity: 8 */
-	sequence_from_array(&s, a, 7);
-	printf("the original array:\n");
-	sequence_write(stdout, &s, " ");
+    /* populate vector, reallocate capacity: 8 */
+    sequence_from_array(&s, a, 7);
+    printf("the original array:\n");
+    sequence_write(stdout, &s, " ");
 
-	/* quick sort */
-	sequence_quicksort(&s, compare);
-	printf("the sorted array:\n");
-	sequence_write(stdout, &s, " ");
+    /* quick sort */
+    sequence_quicksort(&s, compare);
+    printf("the sorted array:\n");
+    sequence_write(stdout, &s, " ");
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	return 0;
+    return 0;
 }

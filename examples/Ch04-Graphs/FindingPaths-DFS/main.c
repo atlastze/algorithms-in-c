@@ -29,32 +29,32 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	Graph graph;
-	graph_init(&graph, 0);
+    Graph graph;
+    graph_init(&graph, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	graph_read(fp, &graph);
-	fclose(fp);
+    graph_read(fp, &graph);
+    fclose(fp);
 
-	graph_write(stdout, &graph);
+    graph_write(stdout, &graph);
 
-	EdgeListGraph path;
-	egraph_init(&path, 1);
+    EdgeListGraph path;
+    egraph_init(&path, 1);
 
-	graph_depth_first_path(&graph, 0, &path);
-	printf("\nThe depth-first-search path from vertex 0:\n");
-	egraph_write(stdout, &path);
+    graph_depth_first_path(&graph, 0, &path);
+    printf("\nThe depth-first-search path from vertex 0:\n");
+    egraph_write(stdout, &path);
 
-	egraph_destroy(&path);
+    egraph_destroy(&path);
 
-	/* destroy graph */
-	graph_destroy(&graph);
+    /* destroy graph */
+    graph_destroy(&graph);
 
-	return 0;
+    return 0;
 }

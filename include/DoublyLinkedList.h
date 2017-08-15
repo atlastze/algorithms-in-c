@@ -40,9 +40,9 @@
  */
 
 typedef struct _DoublyLinkedListNode {
-	void *element;
-	struct _DoublyLinkedListNode *prev;
-	struct _DoublyLinkedListNode *next;
+    void *element;
+    struct _DoublyLinkedListNode *prev;
+    struct _DoublyLinkedListNode *next;
 
 } DoublyLinkedListNode;
 
@@ -69,12 +69,12 @@ typedef DoublyLinkedListNode DoublyLinkedList;
  */
 static inline DoublyLinkedListNode *dlist_create_node(void *element)
 {
-	DoublyLinkedListNode *node =
-	    (DoublyLinkedListNode *) malloc(sizeof(DoublyLinkedListNode));
-	node->element = element;
-	node->prev = NULL;
-	node->next = NULL;
-	return node;
+    DoublyLinkedListNode *node =
+        (DoublyLinkedListNode *) malloc(sizeof(DoublyLinkedListNode));
+    node->element = element;
+    node->prev = NULL;
+    node->next = NULL;
+    return node;
 }
 
 /**
@@ -83,8 +83,8 @@ static inline DoublyLinkedListNode *dlist_create_node(void *element)
  */
 static inline void dlist_init(DoublyLinkedList * head)
 {
-	head->element = NULL;
-	head->prev = head->next = head;
+    head->element = NULL;
+    head->prev = head->next = head;
 }
 
 /**
@@ -111,7 +111,7 @@ void *dlist_remove_back(DoublyLinkedListNode * position);
  * Returns the position of the node (i.e. the previous node)
  */
 DoublyLinkedListNode *dlist_find(DoublyLinkedList * head, void *element,
-				 Comparator compare);
+                                 Comparator compare);
 
 /**
  * dlist_destroy - destroy a list

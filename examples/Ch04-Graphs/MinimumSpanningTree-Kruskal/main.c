@@ -29,31 +29,37 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	EdgeListGraph graph, mst;
-	egraph_init(&graph, 0);
-	egraph_init(&mst, 0);
+    EdgeListGraph graph, mst;
+    egraph_init(&graph, 0);
+    egraph_init(&mst, 0);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	dot2graph(fp, &graph);
-	//egraph_read(fp, &graph);
-	fclose(fp);
+    try {
 
-	graph2dot(stdout, &graph);
+        dot2graph(fp, &graph);
+        graph2dot(stdout, &graph);
 
-	egraph_kruskal_mst(&graph, &mst);
+        egraph_kruskal_mst(&graph, &mst);
 
-	egraph_write(stdout, &graph);
-	egraph_write(stdout, &mst);
+        egraph_write(stdout, &graph);
+        egraph_write(stdout, &mst);
+    }
+    finally {
+        fprintf(stderr, "Return code: %d\n", _except_code_);
+    }
 
-	/* destroy graph */
-	egraph_destroy(&graph);
-	egraph_destroy(&mst);
+    //egraph_read(fp, &graph);
+    fclose(fp);
 
-	return 0;
+    /* destroy graph */
+    egraph_destroy(&graph);
+    egraph_destroy(&mst);
+
+    return 0;
 }

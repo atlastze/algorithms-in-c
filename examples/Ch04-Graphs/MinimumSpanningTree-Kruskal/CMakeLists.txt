@@ -8,5 +8,6 @@ SET(SOURCES
 	${ROOT}/src/IntegerSequence.c
 	${ROOT}/src/DisjointSet.c
 	${ROOT}/src/GraphReader.c
+	${ROOT}/src/exception.c
 )
 ADD_EXECUTABLE(kruskal ${SOURCES})

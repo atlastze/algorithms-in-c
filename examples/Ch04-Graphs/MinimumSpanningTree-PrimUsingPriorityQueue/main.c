@@ -29,31 +29,31 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc < 2)
-		return 0;
+    if (argc < 2)
+        return 0;
 
-	Graph graph;
-	EdgeListGraph mst;
+    Graph graph;
+    EdgeListGraph mst;
 
-	graph_init(&graph, 0);
-	egraph_init(&mst, 1);
+    graph_init(&graph, 0);
+    egraph_init(&mst, 1);
 
-	FILE *fp = fopen(argv[1], "r");
-	if (!fp)
-		exit(1);
+    FILE *fp = fopen(argv[1], "r");
+    if (!fp)
+        exit(1);
 
-	graph_read(fp, &graph);
-	fclose(fp);
+    graph_read(fp, &graph);
+    fclose(fp);
 
-	graph_write(stdout, &graph);
+    graph_write(stdout, &graph);
 
-	graph_prim_priority_queue(&graph, &mst);
+    graph_prim_priority_queue(&graph, &mst);
 
-	egraph_write(stdout, &mst);
+    egraph_write(stdout, &mst);
 
-	/* destroy graph */
-	graph_destroy(&graph);
-	egraph_destroy(&mst);
+    /* destroy graph */
+    graph_destroy(&graph);
+    egraph_destroy(&mst);
 
-	return 0;
+    return 0;
 }

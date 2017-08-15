@@ -27,67 +27,67 @@
 
 void set_init(DisjointSet * set, int count)
 {
-	sequence_init(&set->parent);
-	sequence_init(&set->rank);
-	set->count = count;
+    sequence_init(&set->parent);
+    sequence_init(&set->rank);
+    set->count = count;
 
-	for (int i = 0; i < count; i++) {
-		sequence_push_back(&set->parent, i);
-		sequence_push_back(&set->rank, 1);
-	}
+    for (int i = 0; i < count; i++) {
+        sequence_push_back(&set->parent, i);
+        sequence_push_back(&set->rank, 1);
+    }
 }
 
 void set_destroy(DisjointSet * set)
 {
-	sequence_destroy(&set->parent);
-	sequence_destroy(&set->rank);
+    sequence_destroy(&set->parent);
+    sequence_destroy(&set->rank);
 }
 
 int set_find(DisjointSet * set, int i)
 {
-	/* follow links to find a root */
-	while (set_parent(set, i) != i)
-		i = set_parent(set, i);
-	return i;
+    /* follow links to find a root */
+    while (set_parent(set, i) != i)
+        i = set_parent(set, i);
+    return i;
 }
 
 int set_union(DisjointSet * set, int i, int j)
 {
-	i = set_find(set, i);
-	j = set_find(set, j);
-	if (i == j)
-		return i;
+    i = set_find(set, i);
+    j = set_find(set, j);
+    if (i == j)
+        return i;
 
-	set->count--;
-	/* make smaller root point to larger one */
-	if (set_rank(set, i) < set_rank(set, j)) {
-		set_rank(set, j) += set_rank(set, i);
-		return set_parent(set, i) = j;
-	} else {
-		set_rank(set, i) += set_rank(set, j);
-		return set_parent(set, j) = i;
-	}
+    set->count--;
+    /* make smaller root point to larger one */
+    if (set_rank(set, i) < set_rank(set, j)) {
+        set_rank(set, j) += set_rank(set, i);
+        return set_parent(set, i) = j;
+    } else {
+        set_rank(set, i) += set_rank(set, j);
+        return set_parent(set, j) = i;
+    }
 }
 
 void set_read(FILE * fp, DisjointSet * set)
 {
-	int i, j;
-	while (fscanf(fp, "%d %d", &i, &j) == 2) {
-		/* add new elements if necessary */
-		int size = (i > j ? i : j) + 1;
-		for (int k = set_size(set); k < size; k++) {
-			sequence_push_back(&set->parent, k);
-			sequence_push_back(&set->rank, 1);
-			set->count++;
-		}
+    int i, j;
+    while (fscanf(fp, "%d %d", &i, &j) == 2) {
+        /* add new elements if necessary */
+        int size = (i > j ? i : j) + 1;
+        for (int k = set_size(set); k < size; k++) {
+            sequence_push_back(&set->parent, k);
+            sequence_push_back(&set->rank, 1);
+            set->count++;
+        }
 
-		set_union(set, i, j);
-	}
+        set_union(set, i, j);
+    }
 }
 
 void set_write(FILE * fp, DisjointSet * set)
 {
-	for (int i = 0; i < set_size(set); i++) {
-		fprintf(fp, "%d\t%d\n", i, set_parent(set, i));
-	}
+    for (int i = 0; i < set_size(set); i++) {
+        fprintf(fp, "%d\t%d\n", i, set_parent(set, i));
+    }
 }

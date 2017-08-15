@@ -21,30 +21,20 @@
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */  
-    
+ */
+
 #include "StopWatch.h"
-double real_time() 
+double real_time()
 {
-	
+
 #if defined(_WIN32)
-	    LARGE_INTEGER startTime;
-	LARGE_INTEGER frequency;
-	QueryPerformanceFrequency(&frequency);
-	QueryPerformanceCounter(&startTime);
-	return (double)startTime.QuadPart / (double)frequency.QuadPart;
-	
-#elif defined(__unix__) || defined(__APPLE__) && defined(__MACH__)
-	    /* AIX, BSD, Cygwin, HP-UX, Linux, OSX, POSIX, Solaris. ----- */ 
-	struct timeval tm;
-	gettimeofday(&tm, NULL);
-	return (double)tm.tv_sec + (double)tm.tv_usec / 1000000.0;
-	
-#else /*  */
-	    /* Unsupported platform ------------------------------------- */ 
-	    return -1.0;
-	
-#endif /*  */
-}
 
+    LARGE_INTEGER startTime;
+    LARGE_INTEGER frequency;    QueryPerformanceFrequency(&frequency);    QueryPerformanceCounter(&startTime);    return (double)startTime.QuadPart / (double)frequency.QuadPart;#elif defined(__unix__) || defined(__APPLE__) && defined(__MACH__)
+/* AIX, BSD, Cygwin, HP-UX, Linux, OSX, POSIX, Solaris. ----- */
+    struct timeval tm;
+    gettimeofday(&tm, NULL);    return (double)tm.tv_sec + (double)tm.tv_usec / 1000000.0;#else
+/* Unsupported platform ------------------------------------- */
+    return -1.0;
 
+#endif}

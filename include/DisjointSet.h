@@ -30,9 +30,9 @@
 #include "IntegerSequence.h"
 
 typedef struct _DisjointSet {
-	IntegerSequence parent;	/* parent link - site indexed */
-	IntegerSequence rank;	/* size of component for roots - site indexed */
-	int count;		/* number of components */
+    IntegerSequence parent;     /* parent link - site indexed */
+    IntegerSequence rank;       /* size of component for roots - site indexed */
+    int count;                  /* number of components */
 } DisjointSet;
 
 #define set_parent(set, i) (set->parent.element[i])

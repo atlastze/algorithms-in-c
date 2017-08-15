@@ -32,66 +32,66 @@ HEAP_IMPL(heap, Heap, sequence, int, IntegerSequence)
 /* comapre function used for min-heap */
 int compare(int a, int b)
 {
-	return a - b;
+    return a - b;
 }
 
 /* display indexed heap */
 void display_heap_struct(Heap * heap)
 {
-	printf("\n\theap keys:\t");
-	sequence_write(stdout, heap->keys, " ");
-	printf("\theap index:\t");
-	sequence_write(stdout, &heap->h2k, " ");
-	printf("\tkeys index:\t");
-	sequence_write(stdout, &heap->k2h, " ");
-	/* display_heap_entry */
-	printf("\theap entries:\t");
-	for (int i = 0; i < keys_size(heap); i++) {
-		printf("%d ", heap_entry(heap, i));
-	}
-	printf("\n");
+    printf("\n\theap keys:\t");
+    sequence_write(stdout, heap->keys, " ");
+    printf("\theap index:\t");
+    sequence_write(stdout, &heap->h2k, " ");
+    printf("\tkeys index:\t");
+    sequence_write(stdout, &heap->k2h, " ");
+    /* display_heap_entry */
+    printf("\theap entries:\t");
+    for (int i = 0; i < keys_size(heap); i++) {
+        printf("%d ", heap_entry(heap, i));
+    }
+    printf("\n");
 }
 
 int main(int argc, char *argv[])
 {
-	int a[] = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
-	int n = sizeof(a) / sizeof(int);
+    int a[] = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+    int n = sizeof(a) / sizeof(int);
 
-	printf("\n\n>> Illustrate indexed-heap operations:\n");
-	printf(">> Creating heap by bottom-up construction...\n");
+    printf("\n\n>> Illustrate indexed-heap operations:\n");
+    printf(">> Creating heap by bottom-up construction...\n");
 
-	IntegerSequence s;
-	sequence_init(&s);
-	sequence_from_array(&s, a, n);
-	printf(">> the original array:\n");
-	sequence_write(stdout, &s, " ");
+    IntegerSequence s;
+    sequence_init(&s);
+    sequence_from_array(&s, a, n);
+    printf(">> the original array:\n");
+    sequence_write(stdout, &s, " ");
 
-	Heap heap;
-	heap_init(&heap, &s, compare);
-	printf(">> the heap:\n");
-	display_heap_struct(&heap);
+    Heap heap;
+    heap_init(&heap, &s, compare);
+    printf(">> the heap:\n");
+    display_heap_struct(&heap);
 
-	/* update keys */
-	printf(">> update keys[2] = 13:\n");
-	sequence_set(&s, 2, 13);
-	heap_update(&heap, 2);
-	display_heap_struct(&heap);
+    /* update keys */
+    printf(">> update keys[2] = 13:\n");
+    sequence_set(&s, 2, 13);
+    heap_update(&heap, 2);
+    display_heap_struct(&heap);
 
-	printf(">> update keys[7] = 0:\n");
-	sequence_set(&s, 7, 0);
-	heap_update(&heap, 7);
-	display_heap_struct(&heap);
+    printf(">> update keys[7] = 0:\n");
+    sequence_set(&s, 7, 0);
+    heap_update(&heap, 7);
+    display_heap_struct(&heap);
 
-	/* heap sort */
-	printf("\n>> heap sorting:\n");
-	for (int i = n; i > 0; i--) {
-		printf("   peek keys[%d]: ", heap_pop(&heap));
-		display_heap_struct(&heap);
-	}
+    /* heap sort */
+    printf("\n>> heap sorting:\n");
+    for (int i = n; i > 0; i--) {
+        printf("   peek keys[%d]: ", heap_pop(&heap));
+        display_heap_struct(&heap);
+    }
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	heap_destroy(&heap);
+    heap_destroy(&heap);
 
-	return 0;
+    return 0;
 }

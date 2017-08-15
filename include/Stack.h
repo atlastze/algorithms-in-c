@@ -53,6 +53,6 @@ typedef IntrusiveSListNode Stack;
 #define stack_top(s) ((s)->next)
 
 #define stack_destroy(s, type, member, destroy) \
-        slist_destroy(s, type, member, destroy)
+    slist_destroy(s, type, member, destroy)
 
 #endif /* STACK_H */

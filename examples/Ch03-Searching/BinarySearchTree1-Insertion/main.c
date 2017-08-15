@@ -29,31 +29,31 @@
 
 int main(int argc, char *argv[])
 {
-	BinarySearchTree *root = NULL;
+    BinarySearchTree *root = NULL;
 
-	FILE *fp = stdin;
-	if (argc >= 2) {
-		fp = fopen(argv[1], "r");
-		if (!fp)
-			exit(1);
-	} else {
-		printf("please input elements (non-digits to stop):\n");
-	}
+    FILE *fp = stdin;
+    if (argc >= 2) {
+        fp = fopen(argv[1], "r");
+        if (!fp)
+            exit(1);
+    } else {
+        printf("please input elements (non-digits to stop):\n");
+    }
 
-	root = bst_read(fp);
+    root = bst_read(fp);
 
-	if (argc >= 2)
-		fclose(fp);
+    if (argc >= 2)
+        fclose(fp);
 
-	printf("\npreorder traversal:\n");
-	bst_write(stdout, root);
-	printf("\n");
+    printf("\npreorder traversal:\n");
+    bst_write(stdout, root);
+    printf("\n");
 
-	printf("\ninorder traversal:\n");
-	bst_inorder(root);
-	printf("\n");
+    printf("\ninorder traversal:\n");
+    bst_inorder(root);
+    printf("\n");
 
-	bst_destroy(root);
+    bst_destroy(root);
 
-	return 0;
+    return 0;
 }

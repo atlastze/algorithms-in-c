@@ -33,101 +33,101 @@ HEAP_IMPL(heap, Heap, sequence, int, IntegerSequence)
 /* comapre function used for min-heap */
 int compare1(int a, int b)
 {
-	return a - b;
+    return a - b;
 }
 
 /* comapre function used for max-heap */
 int compare2(int a, int b)
 {
-	return b - a;
+    return b - a;
 }
 
 /* heap construction by insertion */
 void create_heap(int *a, int n, int (*compare) (int, int))
 {
-	printf("\n\n>> Illustrate heap construction step by step:\n");
-	IntegerSequence s;
-	sequence_init(&s);
+    printf("\n\n>> Illustrate heap construction step by step:\n");
+    IntegerSequence s;
+    sequence_init(&s);
 
-	Heap heap;
-	heap_init(&heap, &s, compare);
+    Heap heap;
+    heap_init(&heap, &s, compare);
 
-	printf(">> Creating heap by insertion:\n");
-	for (int i = 0; i < 10; i++) {
-		heap_push(&heap, a[i]);
-		printf("   insert %d: ", a[i]);
-		sequence_write(stdout, &s, " ");
-	}
+    printf(">> Creating heap by insertion:\n");
+    for (int i = 0; i < 10; i++) {
+        heap_push(&heap, a[i]);
+        printf("   insert %d: ", a[i]);
+        sequence_write(stdout, &s, " ");
+    }
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	heap_destroy(&heap);
+    heap_destroy(&heap);
 }
 
 /* heap sorting process */
 void sort_steps(int *a, int n, int (*compare) (int, int))
 {
-	printf("\n\n>> Illustrate heap sort step by step:\n");
-	printf(">> Creating heap by bottom-up construction...\n");
+    printf("\n\n>> Illustrate heap sort step by step:\n");
+    printf(">> Creating heap by bottom-up construction...\n");
 
-	IntegerSequence s;
-	sequence_init(&s);
-	sequence_from_array(&s, a, n);
-	printf(">> the original array:\n");
-	sequence_write(stdout, &s, " ");
+    IntegerSequence s;
+    sequence_init(&s);
+    sequence_from_array(&s, a, n);
+    printf(">> the original array:\n");
+    sequence_write(stdout, &s, " ");
 
-	Heap heap;
-	heap_init(&heap, &s, compare);
-	printf(">> the heap:\n");
-	sequence_write(stdout, &s, " ");
+    Heap heap;
+    heap_init(&heap, &s, compare);
+    printf(">> the heap:\n");
+    sequence_write(stdout, &s, " ");
 
-	/* heap sort */
-	printf("\n>> heap sorting:\n");
-	for (int i = n; i > 0; i--) {
-		printf("   peek %d: ", heap_pop(&heap));
-		sequence_write(stdout, &s, " ");
-	}
+    /* heap sort */
+    printf("\n>> heap sorting:\n");
+    for (int i = n; i > 0; i--) {
+        printf("   peek %d: ", heap_pop(&heap));
+        sequence_write(stdout, &s, " ");
+    }
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	heap_destroy(&heap);
+    heap_destroy(&heap);
 }
 
 /* call heapsort function */
 void sort_inplace(int *a, int n, int (*compare) (int, int))
 {
-	printf("\n\n>> Illustrate heap sort function usage:\n");
-	IntegerSequence s;
-	sequence_init(&s);
-	sequence_from_array(&s, a, n);
-	printf(">> the original array:\n");
-	sequence_write(stdout, &s, " ");
+    printf("\n\n>> Illustrate heap sort function usage:\n");
+    IntegerSequence s;
+    sequence_init(&s);
+    sequence_from_array(&s, a, n);
+    printf(">> the original array:\n");
+    sequence_write(stdout, &s, " ");
 
-	Heap heap;
-	heap_init(&heap, &s, compare);
-	printf(">> the heap:\n");
-	sequence_write(stdout, &s, " ");
+    Heap heap;
+    heap_init(&heap, &s, compare);
+    printf(">> the heap:\n");
+    sequence_write(stdout, &s, " ");
 
-	heap_sort(&heap);
+    heap_sort(&heap);
 
-	printf(">> the sorted array:\n");
-	sequence_write(stdout, &s, " ");
+    printf(">> the sorted array:\n");
+    sequence_write(stdout, &s, " ");
 
-	sequence_destroy(&s);
+    sequence_destroy(&s);
 
-	heap_destroy(&heap);
+    heap_destroy(&heap);
 }
 
 int main(int argc, char *argv[])
 {
-	int a[] = { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3 };
-	create_heap(a, sizeof(a) / sizeof(int), compare1);
+    int a[] = { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3 };
+    create_heap(a, sizeof(a) / sizeof(int), compare1);
 
-	int b[] = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
-	sort_steps(b, sizeof(b) / sizeof(int), compare1);
+    int b[] = { 4, 1, 3, 2, 16, 9, 10, 14, 8, 7 };
+    sort_steps(b, sizeof(b) / sizeof(int), compare1);
 
-	int c[] = { 14, 9, 8, 25, 5, 11, 27, 16, 15, 4, 12, 6, 7, 23, 20 };
-	sort_inplace(c, sizeof(c) / sizeof(int), compare1);
+    int c[] = { 14, 9, 8, 25, 5, 11, 27, 16, 15, 4, 12, 6, 7, 23, 20 };
+    sort_inplace(c, sizeof(c) / sizeof(int), compare1);
 
-	return 0;
+    return 0;
 }

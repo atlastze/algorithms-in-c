@@ -44,8 +44,8 @@
  */
 
 typedef struct _IntrusiveDListNode {
-	struct _IntrusiveDListNode *prev;
-	struct _IntrusiveDListNode *next;
+    struct _IntrusiveDListNode *prev;
+    struct _IntrusiveDListNode *next;
 
 } IntrusiveDListNode;
 
@@ -53,12 +53,12 @@ typedef IntrusiveDListNode IntrusiveDList;
 
 /**
  * dlist_entry - get the struct for this entry
- * @ptr:	the &struct list_head pointer.
- * @type:	the type of the struct this is embedded in.
- * @member:	the name of the list_struct within the struct.
+ * @ptr:    the &struct list_head pointer.
+ * @type:    the type of the struct this is embedded in.
+ * @member:    the name of the list_struct within the struct.
  */
 #define dlist_entry(ptr, type, member) \
-	((type *)((char *)(ptr)-offsetof(type, member)))
+    ((type *)((char *)(ptr)-offsetof(type, member)))
 
 /**
  * dlist_for_each - iterate over a list
@@ -69,9 +69,9 @@ typedef IntrusiveDListNode IntrusiveDList;
  * we should not change links or pointers of the list.
  */
 #define dlist_for_each(position, head) \
-	for(IntrusiveDListNode *position = (head); \
-	position->next != (head); \
-	position = position->next)
+    for(IntrusiveDListNode *position = (head); \
+    position->next != (head); \
+    position = position->next)
 
 /**
  * dlist_init - initialize a list
@@ -79,7 +79,7 @@ typedef IntrusiveDListNode IntrusiveDList;
  */
 static inline void dlist_init(IntrusiveDList * head)
 {
-	head->prev = head->next = head;
+    head->prev = head->next = head;
 }
 
 /**
@@ -88,7 +88,7 @@ static inline void dlist_init(IntrusiveDList * head)
  * @element: pointer to element
  */
 void dlist_insert_back(IntrusiveDListNode * position,
-		       IntrusiveDListNode * node);
+                       IntrusiveDListNode * node);
 
 /**
  * dlist_remove - remove a node at a specific position
@@ -104,18 +104,18 @@ void dlist_remove_back(IntrusiveDListNode * position);
  */
 static inline size_t dlist_size(IntrusiveDList * head)
 {
-	size_t count = 0;
-	dlist_for_each(position, head) {
-		count++;
-	}
-	return count;
+    size_t count = 0;
+    dlist_for_each(position, head) {
+        count++;
+    }
+    return count;
 }
 
 /**
  * dlist_destroy - destroy list node containers, not including dummy head
  * @head: list to be destroyed
- * @type:	the type of the struct this is embedded in.
- * @member:	the name of the list_struct within the struct.
+ * @type:    the type of the struct this is embedded in.
+ * @member:    the name of the list_struct within the struct.
  * @destroy:    the destructor of the struct wherein link is embedded.
  *
  * NOTE: It is the responsibilities of programmers to mamage the memory of
@@ -123,12 +123,12 @@ static inline size_t dlist_size(IntrusiveDList * head)
  */
 #define dlist_destroy(head, type, member, destroy) \
 { \
-	IntrusiveDListNode *position = head; \
-	while(position->next != (head)) { \
-		type *element = dlist_entry(position->next, type, member); \
-		dlist_remove_back(position); \
-		destroy(element); \
-	} \
+    IntrusiveDListNode *position = head; \
+    while(position->next != (head)) { \
+        type *element = dlist_entry(position->next, type, member); \
+        dlist_remove_back(position); \
+        destroy(element); \
+    } \
 }
 
 /*
@@ -142,7 +142,7 @@ static inline size_t dlist_size(IntrusiveDList * head)
  */
 
 typedef struct _IntrusiveSListNode {
-	struct _IntrusiveSListNode *next;
+    struct _IntrusiveSListNode *next;
 
 } IntrusiveSListNode;
 
@@ -150,21 +150,21 @@ typedef IntrusiveSListNode IntrusiveSList;
 
 /**
  * slist_entry - get the struct for this entry
- * @ptr:	the &struct list node pointer.
- * @type:	the type of the struct this is embedded in.
- * @member:	the name of the list_struct within the struct.
+ * @ptr:    the &struct list node pointer.
+ * @type:    the type of the struct this is embedded in.
+ * @member:    the name of the list_struct within the struct.
  */
 #define slist_entry(ptr, type, member) \
-	((type *)((char *)(ptr)-offsetof(type, member)))
+    ((type *)((char *)(ptr)-offsetof(type, member)))
 
 /**
  * slist_entry_of_position - get the struct for this entry
- * @position:	the &struct list position (pointer to previous node).
- * @type:	the type of the struct this is embedded in.
- * @member:	the name of the list_struct within the struct.
+ * @position:    the &struct list position (pointer to previous node).
+ * @type:    the type of the struct this is embedded in.
+ * @member:    the name of the list_struct within the struct.
  */
 #define slist_entry_of_position(position, type, member) \
-	slist_entry(position->next, type, member)
+    slist_entry(position->next, type, member)
 
 /**
  * slist_for_each - iterate over a list
@@ -175,9 +175,9 @@ typedef IntrusiveSListNode IntrusiveSList;
  * we should not change links or pointers of the list.
  */
 #define slist_for_each(position, head) \
-	for(IntrusiveSListNode *position = (head); \
-	position->next != NULL; \
-	position = position->next)
+    for(IntrusiveSListNode *position = (head); \
+    position->next != NULL; \
+    position = position->next)
 
 /**
  * slist_init - initialize a list
@@ -185,7 +185,7 @@ typedef IntrusiveSListNode IntrusiveSList;
  */
 static inline void slist_init(IntrusiveSList * head)
 {
-	head->next = NULL;
+    head->next = NULL;
 }
 
 /**
@@ -194,7 +194,7 @@ static inline void slist_init(IntrusiveSList * head)
  * @element: pointer to element
  */
 void slist_insert_back(IntrusiveSListNode * position,
-		       IntrusiveSListNode * node);
+                       IntrusiveSListNode * node);
 
 /**
  * slist_remove - remove a node at a specific position
@@ -210,18 +210,18 @@ void slist_remove_back(IntrusiveSListNode * position);
  */
 static inline size_t slist_size(IntrusiveSList * head)
 {
-	size_t count = 0;
-	slist_for_each(position, head) {
-		count++;
-	}
-	return count;
+    size_t count = 0;
+    slist_for_each(position, head) {
+        count++;
+    }
+    return count;
 }
 
 /**
  * slist_destroy - destroy list node containers, not including dummy head
  * @head: list to be destroyed
- * @type:	the type of the struct this is embedded in.
- * @member:	the name of the list_struct within the struct.
+ * @type:    the type of the struct this is embedded in.
+ * @member:    the name of the list_struct within the struct.
  * @destroy:    the destructor of the struct wherein link is embedded.
  *
  * NOTE: It is the responsibilities of programmers to mamage the memory of
@@ -229,12 +229,12 @@ static inline size_t slist_size(IntrusiveSList * head)
  */
 #define slist_destroy(head, type, member, destroy) \
 { \
-	IntrusiveSListNode *position = head; \
-	while(position->next) { \
-		type *element = slist_entry(position->next, type, member); \
-		slist_remove_back(position); \
-		destroy(element); \
-	} \
+    IntrusiveSListNode *position = head; \
+    while(position->next) { \
+        type *element = slist_entry(position->next, type, member); \
+        slist_remove_back(position); \
+        destroy(element); \
+    } \
 }
 
 #endif /* INTRUSIVE_LINKED_LIST_H */

@@ -27,35 +27,35 @@
 
 void dlist_insert_back(IntrusiveDListNode * position, IntrusiveDListNode * node)
 {
-	/* link node and position->next */
-	node->next = position->next;
-	position->next->prev = node;
+    /* link node and position->next */
+    node->next = position->next;
+    position->next->prev = node;
 
-	/* linke position and node */
-	position->next = node;
-	node->prev = position;
+    /* linke position and node */
+    position->next = node;
+    node->prev = position;
 }
 
 void dlist_remove_back(IntrusiveDListNode * position)
 {
-	if (!position->next)
-		return;
+    if (!position->next)
+        return;
 
-	IntrusiveDListNode *node = position->next;
-	position->next = node->next;
-	node->next->prev = position;
+    IntrusiveDListNode *node = position->next;
+    position->next = node->next;
+    node->next->prev = position;
 }
 
 void slist_insert_back(IntrusiveSListNode * position, IntrusiveSListNode * node)
 {
-	node->next = position->next;
-	position->next = node;
+    node->next = position->next;
+    position->next = node;
 }
 
 void slist_remove_back(IntrusiveSListNode * position)
 {
-	if (!position->next)
-		return;
+    if (!position->next)
+        return;
 
-	position->next = position->next->next;
+    position->next = position->next->next;
 }

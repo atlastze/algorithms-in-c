@@ -27,61 +27,60 @@
 
 void add_term(Polynomial * position, int coef, int exp)
 {
-	PolynomialTerm *element =
-	    (PolynomialTerm *) malloc(sizeof(PolynomialTerm));
-	element->coef = coef;
-	element->exp = exp;
-	slist_insert_back(position, element);
+    PolynomialTerm *element = (PolynomialTerm *) malloc(sizeof(PolynomialTerm));
+    element->coef = coef;
+    element->exp = exp;
+    slist_insert_back(position, element);
 }
 
 void plus(Polynomial * p1, Polynomial * p2, Polynomial * result)
 {
-	/* positions */
-	Polynomial *term1 = p1;
-	Polynomial *term2 = p2;
-	Polynomial *term3 = result;
+    /* positions */
+    Polynomial *term1 = p1;
+    Polynomial *term2 = p2;
+    Polynomial *term3 = result;
 
-	while (term1->next && term2->next) {
-		if (EXP(term1) == EXP(term2)) {
-			int coef = COEF(term1) + COEF(term2);
-			int exp = EXP(term1);
-			/* advance */
-			term1 = term1->next;
-			term2 = term2->next;
-			if (coef != 0) {
-				add_term(term3, coef, exp);
-				term3 = term3->next;
-			}
-		} else if (EXP(term1) > EXP(term2)) {
-			int coef = COEF(term1);
-			int exp = EXP(term1);
-			add_term(term3, coef, exp);
-			/* advance */
-			term1 = term1->next;
-			term3 = term3->next;
-		} else {
-			int coef = COEF(term2);
-			int exp = EXP(term2);
-			add_term(term3, coef, exp);
-			/* advance */
-			term2 = term2->next;
-			term3 = term3->next;
-		}
+    while (term1->next && term2->next) {
+        if (EXP(term1) == EXP(term2)) {
+            int coef = COEF(term1) + COEF(term2);
+            int exp = EXP(term1);
+            /* advance */
+            term1 = term1->next;
+            term2 = term2->next;
+            if (coef != 0) {
+                add_term(term3, coef, exp);
+                term3 = term3->next;
+            }
+        } else if (EXP(term1) > EXP(term2)) {
+            int coef = COEF(term1);
+            int exp = EXP(term1);
+            add_term(term3, coef, exp);
+            /* advance */
+            term1 = term1->next;
+            term3 = term3->next;
+        } else {
+            int coef = COEF(term2);
+            int exp = EXP(term2);
+            add_term(term3, coef, exp);
+            /* advance */
+            term2 = term2->next;
+            term3 = term3->next;
+        }
 
-	}
+    }
 
-	if (term1->next) {
-		slist_for_each(position, term1) {
-			add_term(term3, COEF(position), EXP(position));
-			term3 = term3->next;
-		}
-	}
+    if (term1->next) {
+        slist_for_each(position, term1) {
+            add_term(term3, COEF(position), EXP(position));
+            term3 = term3->next;
+        }
+    }
 
-	if (term2->next) {
-		slist_for_each(position, term2) {
-			add_term(term3, COEF(position), EXP(position));
-			term3 = term3->next;
-		}
-	}
+    if (term2->next) {
+        slist_for_each(position, term2) {
+            add_term(term3, COEF(position), EXP(position));
+            term3 = term3->next;
+        }
+    }
 
 }

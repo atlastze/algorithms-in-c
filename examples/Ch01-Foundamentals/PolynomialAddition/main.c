@@ -28,49 +28,49 @@
 
 void display(Polynomial * p)
 {
-	slist_for_each(position, p) {
-		if (COEF(position) > 0)
-			printf("+");
-		printf("%d*a^%d ", COEF(position), EXP(position));
-	}
+    slist_for_each(position, p) {
+        if (COEF(position) > 0)
+            printf("+");
+        printf("%d*a^%d ", COEF(position), EXP(position));
+    }
 }
 
 int main(int argc, char *argv[])
 {
-	int a[] = { 1, 2, 3, 4, 5 };
-	Polynomial p1;
-	Polynomial p2;
-	Polynomial p;
+    int a[] = { 1, 2, 3, 4, 5 };
+    Polynomial p1;
+    Polynomial p2;
+    Polynomial p;
 
-	slist_init(&p1);
-	slist_init(&p2);
-	slist_init(&p);
+    slist_init(&p1);
+    slist_init(&p2);
+    slist_init(&p);
 
-	add_term(&p1, 1, 0);
-	add_term(&p1, 5, 3);
-	add_term(&p1, 2, 8);
-	add_term(&p1, 3, 14);
+    add_term(&p1, 1, 0);
+    add_term(&p1, 5, 3);
+    add_term(&p1, 2, 8);
+    add_term(&p1, 3, 14);
 
-	add_term(&p2, -5, 3);
-	add_term(&p2, 10, 6);
-	add_term(&p2, -3, 10);
-	add_term(&p2, 8, 14);
+    add_term(&p2, -5, 3);
+    add_term(&p2, 10, 6);
+    add_term(&p2, -3, 10);
+    add_term(&p2, 8, 14);
 
-	plus(&p1, &p2, &p);
+    plus(&p1, &p2, &p);
 
-	printf("P1(X) = ");
-	display(&p1);
-	printf("\n");
-	printf("P2(X) = ");
-	display(&p2);
-	printf("\n");
-	printf("P1(X)+P2(X) = ");
-	display(&p);
-	printf("\n");
+    printf("P1(X) = ");
+    display(&p1);
+    printf("\n");
+    printf("P2(X) = ");
+    display(&p2);
+    printf("\n");
+    printf("P1(X)+P2(X) = ");
+    display(&p);
+    printf("\n");
 
-	slist_destroy(&p1, free);
-	slist_destroy(&p2, free);
-	slist_destroy(&p, free);
+    slist_destroy(&p1, free);
+    slist_destroy(&p2, free);
+    slist_destroy(&p, free);
 
-	return 0;
+    return 0;
 }
