@@ -41,9 +41,9 @@
 #include "EdgeListGraph.h"
 #include "GraphReader.h"
 
-void raise_exception(int code, const char *msg)
+void raise_exception(int code, int row, int column, const char *msg)
 {
-    fprintf(stderr, "%s\n", msg);
+    fprintf(stderr, "%d, %d: %s\n", row, column, msg);
     throw(code);
 }
 
@@ -171,7 +171,9 @@ void scanner_set_type(struct Scanner *scanner, int type)
 void scanner_keyword(struct Scanner *scanner)
 {                               /* throws */
     if (!isalpha(scanner_current_char(scanner)))
-        raise_exception(INVALID_KEYWORD, "Invalid keyword!");
+        raise_exception(INVALID_KEYWORD,
+                        scanner->token.row,
+                        scanner->token.column, "Invalid keyword!");
 
     while (isalpha(scanner_current_char(scanner))) {
         scanner_enter_char(scanner);
@@ -185,7 +187,9 @@ void scanner_keyword(struct Scanner *scanner)
     else if (strcmp(scanner->token.text, "label") == 0)
         scanner_set_type(scanner, K_Label);
     else {                      /* error */
-        raise_exception(INVALID_KEYWORD, "Invalid keyword!");
+        raise_exception(INVALID_KEYWORD,
+                        scanner->token.row,
+                        scanner->token.column, "Invalid keyword!");
     }
 }
 
@@ -193,7 +197,9 @@ void scanner_keyword(struct Scanner *scanner)
 void scanner_integer_literal(struct Scanner *scanner)
 {                               /* throws */
     if (!isdigit(scanner_current_char(scanner)))
-        raise_exception(INVALID_NUMBER, "Invalid number!");
+        raise_exception(INVALID_NUMBER,
+                        scanner->token.row,
+                        scanner->token.column, "Invalid number!");
 
     while (isdigit(scanner_current_char(scanner))) {
         scanner_enter_char(scanner);
@@ -224,7 +230,9 @@ void scanner_numeric_literal(struct Scanner *scanner)
         scanner_next_char(scanner);
         scanner_integer_literal(scanner);
     } else
-        raise_exception(INVALID_NUMBER, "Invalid number!");
+        raise_exception(INVALID_NUMBER,
+                        scanner->token.row,
+                        scanner->token.column, "Invalid number!");
 
     if (scanner_current_char(scanner) == 'e'
         || scanner_current_char(scanner) == 'E') {
@@ -269,7 +277,9 @@ struct Token scanner_next_token(struct Scanner *scanner)
         } else if (isdigit(lookaheadChar)) {
             scanner_numeric_literal(scanner);
         } else {                /* error */
-
+            raise_exception(LEXICAL_ERROR,
+                            scanner->token.row,
+                            scanner->token.column, "Invalid token!");
         }
     } else if (ch == EOF) {
         scanner_set_text(scanner, "EOF");
@@ -324,13 +334,13 @@ void state_set_graph(struct State *state, int isdirected)
     state->egraph->isdirected = isdirected;
 }
 
-#define max(a, b) ((a)>(b)?(a):(b))
+#define _max(a, b) ((a)>(b)?(a):(b))
 
 void state_enter_edge(struct State *state)
 {
     EdgeNode edge = { state->start, state->end, state->weight };
-    state->egraph->vcount = max(state->egraph->vcount, state->start + 1);
-    state->egraph->vcount = max(state->egraph->vcount, state->end + 1);
+    state->egraph->vcount = _max(state->egraph->vcount, state->start + 1);
+    state->egraph->vcount = _max(state->egraph->vcount, state->end + 1);
     edgelist_push_back(&state->egraph->edges, edge);
 }
 
@@ -341,22 +351,6 @@ struct Parser {
     struct Scanner *scanner;    /* from where we get tokens */
     struct State *state;
 };
-
-/* Actions */
-void action_set_start(struct Parser *parser)
-{
-    parser->state->start = atoi(parser->scanner->token.text);
-}
-
-void action_set_end(struct Parser *parser)
-{
-    parser->state->end = atoi(parser->scanner->token.text);
-}
-
-void action_set_weight(struct Parser *parser)
-{
-    parser->state->weight = atof(parser->scanner->token.text);
-}
 
 /* Initialize a parser */
 void parser_init(struct Parser *parser, struct Scanner *scanner,
@@ -378,18 +372,55 @@ struct Token parser_next_token(struct Parser *parser)
     return scanner_next_token(parser->scanner);
 }
 
+/* Action: match start index of current edge */
+void action_set_start(struct Parser *parser)
+{
+    if (parser_current_token(parser).type == Integer) {
+        parser->state->start = atoi(parser->scanner->token.text);
+        parser_next_token(parser);
+    } else {
+        raise_exception(SYNTAX_ERROR,
+                        parser->scanner->token.row,
+                        parser->scanner->token.column, "Expect an integer!");
+    }
+}
+
+/* Action: match end index of current edge */
+void action_set_end(struct Parser *parser)
+{
+    if (parser_current_token(parser).type == Integer) {
+        parser->state->end = atoi(parser->scanner->token.text);
+        parser_next_token(parser);
+    } else {
+        raise_exception(SYNTAX_ERROR,
+                        parser->scanner->token.row,
+                        parser->scanner->token.column, "Expect an integer!");
+    }
+}
+
+/* Action: match weight of current edge */
+void action_set_weight(struct Parser *parser)
+{
+    /* match number */
+    struct Token token = parser_current_token(parser);
+    if (token.type == Integer || token.type == Float) {
+        parser->state->weight = atof(parser->scanner->token.text);
+        parser_next_token(parser);
+    } else {
+        raise_exception(SYNTAX_ERROR,
+                        parser->scanner->token.row,
+                        parser->scanner->token.column, "Expect a number!");
+    }
+}
+
 /* Check whether the current token matches the specific type */
-void parser_match(struct Parser *parser, int type,
-                  void (*action) (struct Parser * parser))
+void parser_match(struct Parser *parser, int type)
 {
     if (parser->scanner->token.type != type)
-        raise_exception(SYNTAX_ERROR, "Token type mismatched!");
-
-    /* actions */
-    if (action) {
-        action(parser);
-    }
-
+        raise_exception(SYNTAX_ERROR,
+                        parser->scanner->token.row,
+                        parser->scanner->token.column,
+                        "Token type mismatched!");
     if (type != EOF)
         parser_next_token(parser);
 }
@@ -397,29 +428,24 @@ void parser_match(struct Parser *parser, int type,
 /* Parsing weight attribute */
 void parser_weight_attribute(struct Parser *parser)
 {
-    parser_match(parser, '[', NULL);
-    parser_match(parser, K_Label, NULL);
-    parser_match(parser, '=', NULL);
-    parser_match(parser, '"', NULL);
+    parser_match(parser, '[');
+    parser_match(parser, K_Label);
+    parser_match(parser, '=');
+    parser_match(parser, '"');
 
-    if (parser_current_token(parser).type == Integer) {
-        parser_match(parser, Integer, action_set_weight);
-    } else if (parser_current_token(parser).type == Float)
-        parser_match(parser, Float, action_set_weight);
-    else
-        raise_exception(SYNTAX_ERROR, "Expect a number!");
+    action_set_weight(parser);
 
-    parser_match(parser, '"', NULL);
-    parser_match(parser, ']', NULL);
+    parser_match(parser, '"');
+    parser_match(parser, ']');
 }
 
 /* Parsing graph edge */
 void parser_graph_edge(struct Parser *parser)
 {
     state_init_current_edge(parser->state);
-    parser_match(parser, Integer, action_set_start);
-    parser_match(parser, K_Line, NULL);
-    parser_match(parser, Integer, action_set_end);
+    action_set_start(parser);
+    parser_match(parser, K_Line);
+    action_set_end(parser);
 
     if (parser_current_token(parser).type == '[') {
         parser_weight_attribute(parser);
@@ -431,24 +457,24 @@ void parser_graph_edge(struct Parser *parser)
 /* Parsing graph */
 void parser_graph(struct Parser *parser)
 {
-    parser_match(parser, K_Graph, NULL);
-    parser_match(parser, '{', NULL);
+    parser_match(parser, K_Graph);
+    parser_match(parser, '{');
 
     while (parser_current_token(parser).type != '}') {
         parser_graph_edge(parser);
     }
 
-    parser_match(parser, '}', NULL);
-    parser_match(parser, EOF, NULL);
+    parser_match(parser, '}');
+    parser_match(parser, EOF);
 }
 
 /* Parsing digraph edge */
 void parser_digraph_edge(struct Parser *parser)
 {
     state_init_current_edge(parser->state);
-    parser_match(parser, Integer, action_set_start);
-    parser_match(parser, K_Arrow, NULL);
-    parser_match(parser, Integer, action_set_end);
+    action_set_start(parser);
+    parser_match(parser, K_Arrow);
+    action_set_end(parser);
 
     if (parser_current_token(parser).type == '[') {
         parser_weight_attribute(parser);
@@ -460,15 +486,15 @@ void parser_digraph_edge(struct Parser *parser)
 /* Parsing digraph */
 void parser_digraph(struct Parser *parser)
 {
-    parser_match(parser, K_Digraph, NULL);
-    parser_match(parser, '{', NULL);
+    parser_match(parser, K_Digraph);
+    parser_match(parser, '{');
 
     while (parser_current_token(parser).type != '}') {
         parser_digraph_edge(parser);
     }
 
-    parser_match(parser, '}', NULL);
-    parser_match(parser, EOF, NULL);
+    parser_match(parser, '}');
+    parser_match(parser, EOF);
 }
 
 /* Parsing graph definition */
@@ -481,7 +507,9 @@ void parser_graph_definition(struct Parser *parser)
         state_set_graph(parser->state, 0);
         return parser_graph(parser);
     } else {
-        raise_exception(SYNTAX_ERROR, "Unkown graph type!");
+        raise_exception(SYNTAX_ERROR,
+                        parser->scanner->token.row,
+                        parser->scanner->token.column, "Unkown graph type!");
     }
 }
 

@@ -32,6 +32,7 @@
 #define INVALID_KEYWORD   2
 #define INVALID_NUMBER    3
 #define SYNTAX_ERROR      4
+#define LEXICAL_ERROR     5
 
 /* Forward declaration */
 struct _EdgeListGraph;
